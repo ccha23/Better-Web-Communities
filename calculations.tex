@@ -1,0 +1,799 @@
+\section{Detailed calculations}
+\label{sec:calculations}
+This section details the calculations for graphs in \figref{fig:eg12}. It is helpful to point out the underpinning mathematical structure of
+the community candidate $C_{`a,t}$, namely the principle sequence of a submodular function~\cite{fujishige80} \cite{fujishige-pp-revisited}.
+
+\begin{proposition}
+  \label{pro:ps}
+  Given $`b\in [0,1]$ and $t\in V$, the candidate $C_{`a,t}$ of any $t\in V$ and $`a\in `R$ can be characterized as
+  \begin{align}
+    C_{`a,t}  = \begin{cases}
+      C_0 & `a\geq `a_1\\
+      C_{\ell} & `a\in [`a_{\ell+1},`a_{\ell}), \ell \in \Set{1,\dots,N-1}\\
+      C_N & `a<`a_N
+      \end{cases}
+  \end{align}
+  for some non-negative integer $N$ and sequences
+  \begin{align}
+    `8 > `a_1 &> `a_2 > \dots > `a_N \geq 0 \label{eq:`as}\\
+    \Set{t}=C_0 \subsetneq & C_1  \subsetneq C_2 \subsetneq \dots\subsetneq C_N = \Set{V}.\label{eq:Cs}
+  \end{align}
+  (The integer $N$ and the two sequences depend on $t$ and $\beta$.)
+\end{proposition}
+%(Note that, in the above proposition, the range of $`a$ is extended
+%from $`a\geq 0$ to $`a\in `R$.)
+
+It follows from Theorem~\ref{thm:f-shrink-expand} that:
+\begin{Corollary}
+	\label{cor:alpha-l}
+	Given $`b\in [0,1]$ and $t\in V$, with $C_{0} = \Set{t}$, we have for all $l\in \Set{1,\dots, N}$
+  \begin{align}
+	 \label{eq:alpha-l}
+    %`a_{\ell} = \min_{C\subseteq V: C\supsetneq C_{\ell -1 }} \frac{f_{`b}(C_{\ell - 1})- f_{`b}(C)}{\abs{C`/C_{\ell -1}}} \quad \forall \ell \in \Set{1,\dots,N}
+    `a_{\ell} =  \max_{C\subseteq V: C\supsetneq C_{\ell -1 }}  
+				 \frac{f(C_{\ell - 1})- f(C)}{\abs{C`/C_{\ell -1}}} % \quad \forall \ell \in \Set{1,\dots,N}
+  \end{align}
+  and $C_{\ell}$ is the inclusion-wise maximum solution.
+\end{Corollary}
+Hence, $`a_{\ell}$ and $C_{\ell}$ (i.e., the candidates together with the $\alpha$ values at which
+they change) can be computed successively by solving \eqref{eq:alpha-l}.
+For an algorithm that makes the computations in polynomial time, we refer the reader to
+\cite{nagano2011size}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% eg:chain %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{For Examples~\ref{eg:chain-community} and \ref{eg:chain-cut}}
+Below we present more details on the calculations in Examples~\ref{eg:chain-community} and
+\ref{eg:chain-cut}.
+We remind the reader that the examples consider the graph in Fig.~\ref{fig:eg-chain}.
+The desired communities, for $\beta = 0$ and $1$, and the cut-clusters can be obtained by first computing the
+candidates and then invoking Propositions~\ref{prop:communities-from-candidates}
+and \ref{prop:cut-clusters-from-candidates}, respectively.
+To compute the candidates and the $\alpha$ values at which the candidates change, we rely on
+Corollary~\ref{cor:alpha-l}.
+Let us start with $\beta = 0$:
+\\
+For $t = 0$, we have
+\begin{align*}
+	\alpha_1
+		&=
+		\max_{C\subseteq V:C\supsetneq \Set{0}} \frac{w(V\backslash \Set{0},\Set{0}) - w(V\backslash C,C)}{|C|-1} \\
+		& = 
+		\max_{C\subseteq V:C\supsetneq \Set{0}} \frac{2 - w(V\backslash C,C)}{|C|-1},
+\end{align*}
+which results in $\alpha_1 = \frac{2}{3}$ and the maximization is uniquely achieved by $V$, i.e., we
+have
+\begin{align*}
+	\begin{array}{lll}
+	C_{\alpha,0} \! = \! \left\{
+	\!\!
+		\begin{array}{ll}
+		\!\!
+			\Set{0}, \!\! & \!\!\! \alpha \geq  \frac{2}{3}
+			\\
+			\!\!
+			\Set{0,1,2,3}, \!\! & \!\!\! \alpha < \frac{2}{3}
+		\end{array}
+		\!\!\!
+		\right.
+		& 
+		\!\!\!
+		\text{and}
+		\!\!\!
+		&
+	\hat{f}_{0}(\alpha) \! = \! \left\{
+		\begin{array}{ll}
+			\!\!\! \alpha + 2, \!\! &\!\!\!  \alpha \geq \frac{2}{3}
+			\\
+			\!\!\! 4\alpha, \!\! &\!\!\! \alpha < \frac{2}{3}
+			.
+		\end{array}
+		\right.
+	\end{array}
+\end{align*}
+%
+For $t = 1$, we have
+\begin{align*}
+	\alpha_1
+		&=
+		\max_{C\subseteq V:C\supsetneq \Set{1}} \frac{w(V\backslash \Set{1},\Set{1}) - w(V\backslash C,C)}{|C|-1} \\
+		& = 
+		\max_{C\subseteq V:C\supsetneq \Set{0}} \frac{5 - w(V\backslash C,C)}{|C|-1},
+\end{align*}
+which results in $\alpha_1 = 2$, uniquely achieved by $\Set{0,1}$. In the next succession, we have
+\begin{align*}
+	\alpha_2
+		&=
+		\max_{C\subseteq V:C\supsetneq \Set{0,1}} \frac{w(V\backslash \Set{0,1},\Set{0,1}) - w(V\backslash C,C)}{|C|-2} \\
+		& = 
+		\max_{C\subseteq V:C\supsetneq \Set{0,1}} \frac{3 - w(V\backslash C,C)}{|C|-2},
+\end{align*}
+which results in $\alpha_2 = 1.5$, achieved uniquely by $\Set{0,1,2,3}$,
+i.e., we have
+\begin{align*}
+\arraycolsep=1pt\def\arraystretch{1.0}
+	\begin{array}{lll}
+	C_{\alpha,1} \! = \! \left\{
+		\begin{array}{ll}
+			\! \Set{1},   &   \alpha  \geq  2
+			\\
+			\! \Set{0,1}, &   \alpha  \in  [\frac{3}{2},2)
+			\\
+			\! \Set{0,1,2,3}, & \alpha  <  1.5
+			.
+		\end{array} 
+		\right.
+        &
+		  %\text{and}
+		  ,
+		  & 
+		  \hat{f}_{1}(\alpha) \! = \! \left\{
+		\begin{array}{ll}
+			\! \alpha \!+ \! 5,  &  \alpha \! \geq  \! 2 \\
+			\! 2\alpha\! + \! 3, &  \alpha \! \in \! [\frac{3}{2}, 2) \\
+		   \! 4\alpha,  & \alpha < 1.5 \ .
+		\end{array}
+		\right.
+	\end{array}
+\end{align*}
+
+By symmetry, given $\beta$, we have for $t = 2$ and $3$,
+$C_{\alpha,t} = \Set{3-j \mid j \in C_{\alpha,3-t}}$ (this set is empty by convention if
+$C_{\alpha,3-t}$ is empty) and  $\hat{f}_{t} = \hat{f}_{3-t}$.
+Hence, the candidates are as listed in~\eqref{eq:eg-chain-candidates}.
+
+
+Let us first obtain the cut-clusters.
+By Proposition~\ref{prop:cut-clusters-from-candidates}, taking the inclusion-wise maximal candidates
+for $\beta = 0$ gives the cut clusters in \eqref{eq:eg-chain-cut}.
+(In Fig.~\ref{fig:eg-chain-beta0}, this corresponds to drawing a vertical line at $\alpha$, reading
+out the candidates $C_{\alpha,t}$ that correspond to the intersection of this vertical line with
+the solid lines in the figure, and finally taking the maximal among such candidates.)
+
+To obtain the communities at $\beta = 0$, we use Proposition~\ref{prop:communities-from-candidates},
+or equivalently, compute $\hat{f}(\alpha)$ from $\hat{f}_{t}(\alpha)$, which gives
+\begin{align*}
+	\hat{f}(\alpha) = \left\{
+		\begin{array}{lll}
+		\!\!\!	\alpha+2, & \alpha \geq 1, & \text{solved by $\Set{0}, \Set{3}$}
+			\\
+		\!\!\!	4\alpha, & \alpha <  1, & \text{solved by $\Set{0,1,2,3}$}
+			.
+		\end{array}
+		\right.
+\end{align*}
+resulting in the communities in \eqref{eq:eg-chain}. (The ones labeled with $\beta = 0$.)
+
+Next we consider $\beta = 1$.  
+To obtain the communities for $\beta = 1$, we repeat the same calculations that were carried out
+when computing the communities at $\beta = 0$, as summarized below 
+\begin{align*}
+\arraycolsep=1pt\def\arraystretch{1.0}
+	\begin{array}{lll}
+	C_{\alpha,0} \! = \! \left\{
+		\begin{array}{ll}
+			\Set{0}, & \alpha \geq  5 \\
+			\Set{0,\! 1,\!2}, & \alpha \!\in\! [4,\!5) \\
+			\Set{0,\!1,\!2,\!3}, & \alpha < 4 .
+		\end{array}
+		\right.
+		%& \text{and} &
+		& , &
+	\hat{f}_{0}(\alpha) \!= \! \left\{
+		\begin{array}{ll}
+			 \alpha, &  \alpha \geq  5 \\
+			3\alpha -10, & \alpha \in [4,5) \\
+			4\alpha -14, & \alpha < 4 \ .
+		\end{array}
+		\right.
+	\end{array}
+\end{align*}
+%
+\begin{align*}
+\arraycolsep=1pt\def\arraystretch{1.0}
+\begin{array}{lll}
+	C_{\alpha,1} \!\! = \!\! \left\{
+	\begin{array}{ll}
+		\Set{1},   &   \alpha \geq  6 \\
+		\Set{1,2}, &   \alpha \in [4,\!6) \\
+		\Set{0,1,2,3}, & \alpha < 4 .
+	\end{array}
+	\right.
+	%& \text{and} &
+	& , &
+	\hat{f}_{1}(\alpha) \!\!= \!\! \left\{
+	\begin{array}{ll}
+		 \alpha, 	 & \alpha \geq  6 \\
+		2\alpha -6,  & \alpha \in [4,\!6) \\
+		4\alpha -14, & \alpha < 4 \ .
+	\end{array}
+	\right.
+\end{array}
+\end{align*}
+
+%
+%\begin{align*}
+%	\begin{array}{lll}
+%	C_{\alpha,1,1} = \left\{
+%		\begin{array}{ll}
+%			\Set{1}, & \alpha \geq  6
+%			\\
+%			\Set{1,2}, & \alpha \in [4,6)
+%			\\
+%			\Set{0,1,2,3}, & \alpha < 4
+%			.
+%		\end{array}
+%		\right.
+%		&\text{and}&
+%	g_{1}(\alpha,1) = \left\{
+%		\begin{array}{ll}
+%			\alpha, & \alpha \geq  6
+%			\\
+%			2a-6, & \alpha \in [4,6)
+%			\\
+%			4\alpha-14, & \alpha < 4
+%			.
+%		\end{array}
+%		\right.
+%	\end{array}
+%\end{align*}
+
+Hence,
+
+\begin{align*}
+	\hat{f}(\alpha) = \left\{
+		\begin{array}{lll}
+		\!\!\!	\alpha, & \alpha \geq 6, & \text{solved by $\Set{0}, \dots, \Set{3}$}
+			\\
+		\!\!\!	2\alpha-6, & \alpha \in [4,6), & \text{solved by $\Set{1,2}$}
+			\\
+		\!\!\!	4\alpha-14, & \alpha <  4, & \text{solved by $\Set{0,1,2,3}$}
+			.
+		\end{array}
+		\right.
+\end{align*}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% eg:two-chain %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\newpage
+%\subsection{For Example~\ref{eg:two-chains}}
+%%%%%%%%%%%%fig: plots of f_beta, g_t, and g for disconeected chains graph 
+%\begin{figure*}
+%	\centering
+%	%%%%%%%%%%%%%%%
+%	\center
+%	\def\figsep{1cm}
+%	\def\dist{1}
+%	\def\disty{.5}
+%	%%%%%%%%%%%%%%%
+%	\subcaptionbox{$`b = 0$ \label{fig:eg-two-chains-beta0}}{
+%	\scalebox{0.8}{
+%		{\def\u{1.8}
+%			\tikzstyle{point}=[draw,circle,minimum size=.2em,inner sep=0, outer sep=.2em]
+%			\begin{tikzpicture}[scale=1, x=1.4em,y=1.4em,>=latex]
+%			\draw[->] (0,-.5*\u) -- (0,7*\u) node [] {};
+%			\draw[->] (-.5*\u,0) -- (4*\u,0) node [label=right:$`a$] {};
+%			%ticks
+%			\foreach \x in {0,...,3}
+%				\draw (\x*\u,1pt) -- (\x*\u,-3pt);
+%			\foreach \y in {0,...,6}
+%				\draw (1pt,\y*\u) -- (-3pt,\y*\u);
+%			\foreach \xa/\ya/\xb/\yb/\lp/\lb in {
+%				0/3/4/7/left/{$\kern1em \begin{array}{c} \Set{0} \\ \Set{1} \end{array} \!\!\!, \ `a+3$},
+%				0/2/4/6/left/{$\kern1em \begin{array}{c} \Set{2} \\ \Set{3} \end{array} \!\!\!,  `a+2$},
+%				0/0/3.5/7/above left/{$\kern1em \begin{array}{c} \Set{0,1} \\ \Set{2,3} \end{array} \!\!\!, \ 2`a$}
+%			}
+%			\draw[dashed] (\xa*\u,\ya*\u) node [inner sep=0,outer sep=0,label={[label distance=0em]\lp:{\scriptsize\lb}}] {} -- (\xb*\u,\yb*\u);
+%			\path (2*\u,4*\u) node (c1) [point,red,thick,label=right:{\scriptsize$(2,4)$}] {};
+%			\path (3*\u,6*\u) node (c2) [point,black,thick,label=right:{\scriptsize$(3,6)$}] {};
+%			\draw[-,thick,black] (0,0)--(c1)--(c2)--(4*\u,7*\u);
+%			\draw[-,thick,blue] (0,0)--(c1)--(4*\u,6*\u);
+%%			%
+%			\path (c2) ++(25:3) node (g0) [] {$\hat{f}_0, \hat{f}_{1}$};
+%			\path (c1) ++(25:3.5) node (g2) [] {$\hat{f}, \hat{f}_2, \hat{f}_{3}$};
+%			\end{tikzpicture}}
+%	}
+%	}
+%	%\hfil
+%	\hspace{-.2cm}
+%	\subcaptionbox{$`b = 1$ \label{fig:eg-two-chains-beta1}}{
+%	\scalebox{0.8}{
+%		{\def\u{0.8}
+%			\tikzstyle{point}=[draw,circle,minimum size=.2em,inner sep=0, outer sep=.2em]
+%			\begin{tikzpicture}[scale=1, x=1.4em,y=1.4em,>=latex]
+%			%\draw[help lines, color=gray!30, dashed] (-.5*\u,-7.5*\u) grid (4*\u,4*\u);
+%			\draw[->] (0,-10.5*\u) -- (0,7*\u) node [] {};
+%			\draw[->] (-.5*\u,0) -- (7*\u,0) node [label=right:$`a$] {};
+%			%ticks
+%			\foreach \x in {0,...,6}
+%				\draw (\x*\u,1pt) -- (\x*\u,-3pt);
+%			\foreach \y in {-10,...,6}
+%				\draw (1pt,\y*\u) -- (-3pt,\y*\u);
+%			%%
+%			\foreach \xa/\ya/\xb/\yb/\lp/\lb in {
+%				0/0/7/7/left/{$\kern1em \begin{array}{c} \Set{0} \\ \Set{1} \\ \Set{2} \\ \Set{3} \end{array} \!\!\!, \ `a$},
+%				0/-4/{11/2}/7/left/{$\kern1em \Set{2,3}, 2`a-4$},
+%				0/-6/{13/2}/7/left/{$\kern1em \Set{0,1}, 2`a-6$},
+%				0/-10/{17/4}/7/left/{$\kern1em \Set{0,1,2,3}, 4`a-10$}
+%			}
+%			\draw[dashed] (\xa*\u,\ya*\u) node [inner sep=0,outer sep=0,label={[label distance=0em]\lp:{\scriptsize\lb}}] {} -- (\xb*\u,\yb*\u);
+%			\path (2*\u,-2*\u) node (c1) [point,red,thick,label=right:{\scriptsize$(2,-2)$}] {};
+%			\path (3*\u,2*\u) node (c2) [point,black,thick,label=right:{\scriptsize$(3,2)$}] {};
+%			\path (4*\u,4*\u) node (c3) [point,black,thick,label=right:{\scriptsize$(4,4)$}] {};
+%			\path (6*\u,6*\u) node (c4) [point,red,thick,label=right:{\scriptsize$(6,6)$}] {};
+%			\draw[-,thick,black] (0,-10*\u)--(c1)--(c2)--(c3)--(c4)--(7*\u,7*\u);
+%			\draw[-,thick,blue] (0,-10*\u)--(c1)--(c4)--(7*\u,7*\u);
+%			%%%
+%			\path(c2) ++(130:1.3) node(g2){$\hat{f}_2, \hat{f}_3$};
+%			\path(c1) ++(-35:1.8) node(g0){$\hat{f}, \hat{f}_0, \hat{f}_1$};
+%			\end{tikzpicture}}
+%	}
+%	}
+%	\caption{The plots of $\hat{f}_t(`a)$ and $\hat{f}(`a)$ against $`a$ for Example~\ref{eg:two-chains}}
+%	\label{fig:P:two-chains}
+%\end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%Figs.~\ref{fig:eg-two-chains-beta0} and \ref{fig:eg-two-chains-beta1} show plots (against $`a$) of the functions $\hat{f}(`a)$
+%(blue, see \eqref{eq:alpha-beta-community} or \eqref{eq:g-community}), $\hat{f}_{t}(`a,`b)$
+%(solid black, see \eqref{eq:g-candidate}), and
+%$f_{\alpha}(C)$ (dashed black) (for the relevant subsets $C\subseteq V$).
+%The figures and the communities in \eqref{eq:eg-two-chains} are obtained in a similar manner to
+%Example~\ref{eg:chain} as summarized below.
+%
+%For $\beta = 0$,
+%\begin{align*}
+%	\begin{array}{ll}
+%		C_{\alpha,0,0} = 
+%		\left\{
+%		\begin{array}{ll}
+%			\!\!\!\Set{0},  & \alpha \geq 3
+%			\\
+%			\!\!\!\Set{0,1}, & \alpha < 3
+%		\end{array}
+%		\right.
+%		,
+%		&
+%		\hat{f}_{0}(\alpha) = 
+%		\left\{
+%		\begin{array}{ll}
+%			\!\!\!\alpha+3, & \alpha \geq 3
+%			\\
+%			\!\!\!2\alpha & \alpha < 3
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,0,1} = 
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{1},  & \alpha \geq 3
+%			\\
+%		\!\!\!	\Set{0,1}, & \alpha < 3
+%		\end{array}
+%		\right.
+%		,
+%		&
+%		\hat{f}_{1}(\alpha) = 
+%		\hat{f}_{0}(\alpha,)
+%		%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,0,2} = 
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{2},  & \alpha \geq 2
+%			\\
+%		\!\!\!	\Set{2,3}, & \alpha < 2
+%		\end{array}
+%		\right.
+%		,
+%		&
+%		\hat{f}_{2}(\alpha) = 
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha+2, & \alpha \geq 2
+%			\\
+%		\!\!\!	2\alpha & \alpha < 2
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,0,3} = 
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{3},  & \alpha \geq 2
+%			\\
+%		\!\!\!	\Set{2,3}, & \alpha < 2
+%		\end{array}
+%		\right.
+%		,
+%		&
+%		\hat{f}_{3}(\alpha) = 
+%		\hat{f}_{2}(\alpha)
+%	\end{array}
+%\end{align*}
+%Hence, 
+%\begin{align*}
+%	\hat{f}(\alpha) = \left\{
+%		\begin{array}{lll}
+%		\!\!\!	\alpha+2, & \alpha \geq 2, & \text{solved by $\Set{2}, \Set{3}$}
+%			\\
+%		\!\!\!	2\alpha, & \alpha <  2, & \text{solved by $\Set{0,1}, \Set{2,3}$}.
+%		\end{array}
+%		\right.
+%\end{align*}
+%
+%For $\beta = 1$,
+%\begin{align*}
+%	\begin{array}{ll}
+%		C_{\alpha,1,0} \!\!  = \!\!   
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{0}, & \!\!\!\alpha \geq 6
+%			\\
+%		\!\!\!	\Set{0,1}, &\!\!\! \alpha \in [2,6)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\alpha < 2
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!	\!\!\!		\hat{f}_{0}(\alpha) \!\!  = \!\!  
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha, & \!\!\!\alpha \geq 6
+%			\\
+%		\!\!\!	2\alpha-6, & \!\!\!\alpha \in [2,6)
+%			\\
+%		\!\!\!	4\alpha-10, & \!\!\!\alpha < 2
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,1,1} \!\! = \!\!  
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{1}, & \!\!\!\alpha \geq 6
+%			\\
+%		\!\!\!	\Set{0,1}, & \!\!\!\alpha \in [2,6)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\alpha < 2
+%		\end{array}
+%		\right.
+%	\!\!\!		,
+%		&
+%	\!\!\!	\!\!\!		\hat{f}_{1}(\alpha) \!\! = \!\!   
+%		\hat{f}_{0}(\alpha)
+%		%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,1,2} \!\! = \!\!   
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{2}, & \!\!\!\alpha \geq 4
+%			\\
+%		\!\!\!	\Set{2,3}, & \!\!\!\alpha \in [3,4)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, &\!\!\! \alpha < 3
+%		\end{array}
+%		\right.
+%	\!\!\!		,
+%		&
+%	\!\!\!	\!\!\!		\hat{f}_{2}(\alpha) \!\! = \!\!   
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha, & \!\!\!\alpha \geq 4
+%			\\
+%		\!\!\!	2\alpha-4, &\!\!\! \alpha \in [3,4)
+%			\\
+%		\!\!\!	4\alpha-10, & \!\!\!\alpha < 3
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,1,3} \!\! = \!\!   
+%		\left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{3}, & \!\!\!\alpha \geq 4
+%			\\
+%		\!\!\!	\Set{2,3}, & \!\!\!\alpha \in [3,4)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\alpha < 3
+%		\end{array}
+%		\right.
+%	\!\!\!		,
+%		&
+%	\!\!\!	\!\!\!		\hat{f}_{3}(\alpha) \!\! = \!\!   
+%		\hat{f}_{2}(\alpha)
+%	\end{array}
+%\end{align*}
+%Hence, 
+%\begin{align*}
+%	\hat{f}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{lll}
+%    	\!\!\!	\alpha, & \alpha \geq 6, & \text{solved by $\Set{0}, \dots, \Set{3}$}
+%			\\
+%		\!\!\!	2\alpha-6, & \alpha \in [2, 6), & \text{solved by $\Set{0,1}$}
+%			\\
+%		\!\!\!	4\alpha-10, & \alpha < 2, & \text{solved by $\Set{0,\!1,\!2,\!3}$.}
+%		\end{array}
+%		\right.
+%\end{align*}
+%
+%
+%
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% eg:claw %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{For Example~\ref{eg:claw}}
+%
+%%%%%%%%%%%% fig: plots of f_beta, g_t, and g for claw graph
+%\begin{figure*}
+%	\centering
+%	%%%%%%%%%%%%%
+%	\def\figsep{1cm}
+%	\def\dist{1}
+%	\def\disty{.5}
+%	%%%%%%%%%%%%
+%	\subcaptionbox{$`b = 0$ \label{fig:eg-claw-beta0}}{
+%	\scalebox{0.8}{
+%		{\def\u{1.4}
+%			\tikzstyle{point}=[draw,circle,minimum size=.2em,inner sep=0, outer sep=.2em]
+%			\begin{tikzpicture}[scale=1, x=1.4em,y=1.4em,>=latex]
+%			\draw[->] (0,-.5*\u) -- (0,11*\u) node [] {};
+%			\draw[->] (-.5*\u,0) -- (4*\u,0) node [label=right:$`a$] {};
+%			%ticks
+%			\foreach \x in {0,...,3}
+%				\draw (\x*\u,1pt) -- (\x*\u,-3pt);
+%			\foreach \y in {0,...,10}
+%				\draw (1pt,\y*\u) -- (-3pt,\y*\u);
+%			\foreach \xa/\ya/\xb/\yb/\lp/\lb in {
+%				0/7/4/11/left/{$\kern1em \Set{1}, `a+7$},
+%				0/4/3.5/11/left/{$\kern1em \Set{0,1}, 2`a+4$},
+%				0/3/3/6/left/{$\kern1em \Set{0}, `a+3$},
+%				0/2/3/5/left/{$\kern1em \begin{array}{c} \Set{2} \\ \Set{3} \end{array} \!\!\!, \ `a+2$},
+%				0/0/2.75/11/above left/{$\kern1em \Set{0,1,2,3}, 4`a$}
+%			}
+%			\draw[dashed] (\xa*\u,\ya*\u) node [inner sep=0,outer sep=0,label={[label distance=0em]\lp:{\scriptsize\lb}}] {} -- (\xb*\u,\yb*\u);
+%			\path (2/3*\u,8/3*\u) node (c1) [point,red,thick,label=right:{\scriptsize$(2/3,8/3)$}] {};
+%			\path (1*\u,4*\u) node (c2) [point,black,thick,label=right:{\scriptsize$(1,4)$}] {};
+%			\path (2*\u,8*\u) node (c3) [point,black,thick,label=right:{\scriptsize$(2,8)$}] {};
+%			\path (3*\u,10*\u) node (c4) [point,black,thick,label=right:{\scriptsize$(3,10)$}] {};
+%			\draw[-,thick,black] (0,0)--(c1)--(c2)--(4*\u,7*\u);
+%			\draw[-,thick,black] (0,0)--(c1)--(c2)--(c3)--(c4)--(4*\u,11*\u);
+%			\draw[-,thick,blue] (0,0)--(c1)--(3.5*\u,5.5*\u);
+%			%
+%			\path(c4) ++(25:2)node(g1){$\hat{f}_1$};
+%			\path(c2) ++(38:5.4)node(g0){$\hat{f}_0$};
+%			\path(c1) ++(-50:1.8)node(g2){$\hat{f}, \hat{f}_2, \hat{f}_3$};
+%			\end{tikzpicture}}
+%	}
+%	}
+%	\hfil
+%	\subcaptionbox{$`b = 1$ \label{fig:eg-claw-beta1}}{
+%	\scalebox{0.8}{
+%		{\def\u{.75}
+%			\tikzstyle{point}=[draw,circle,minimum size=.2em,inner sep=0, outer sep=.2em]
+%			\begin{tikzpicture}[scale=1, x=1.4em,y=1.4em,>=latex]
+%			\draw[->] (0,-14.5*\u) -- (0,7*\u) node [] {};
+%			\draw[->] (-.5*\u,0) -- (7*\u,0) node [label=right:$`a$] {};
+%			%ticks
+%			\foreach \x in {0,...,6}
+%				\draw (\x*\u,1pt) -- (\x*\u,-3pt);
+%			\foreach \y in {-14,...,6}
+%				\draw (1pt,\y*\u) -- (-3pt,\y*\u);
+%			\foreach \xa/\ya/\xb/\yb/\lp/\lb in {
+%				0/0/7/7/above left/{$\kern1em \begin{array}{c} \Set{0} \\ \Set{1} \\ \Set{2} \\ \Set{3} \end{array} \!\!\!, \ `a$},
+%				0/-6/{13/2}/7/left/{$\kern1em \Set{0,1}, 2`a-6$},
+%				0/-10/{17/3}/7/left/{$\kern1em \begin{array}{c} \Set{0,1,2} \\ \Set{0,1,3} \end{array}, 3`a-10$},
+%				0/-14/{21/4}/7/left/{$\kern1em \Set{0,1,2,3}, 4`a-14$}
+%			}
+%			\draw[dashed] (\xa*\u,\ya*\u) node [inner sep=0,outer sep=0,label={[label distance=0em]\lp:{\scriptsize\lb}}] {} -- (\xb*\u,\yb*\u);
+%			\path (4*\u,2*\u) node (c1) [point,red,thick,label=right:{\scriptsize$(4,2)$}] {};
+%			\path (5*\u,5*\u) node (c2) [point,black,thick,label=right:{\scriptsize$(5,5)$}] {};
+%			\path (6*\u,6*\u) node (c3) [point,red,thick,label=right:{\scriptsize$(6,6)$}] {};
+%			\draw[-,thick,black] (0,-14*\u)--(c1)--(c2)--(c3)--(7*\u,7*\u);
+%			\draw[-,thick,blue] (0,-14*\u)--(c1)--(c3)--(7*\u,7*\u);
+%			\path(c1) ++(-85:5)node(g0){$\hat{f},\hat{f}_0,\hat{f}_1$};
+%			\path(c2) ++(155:1.2)node(g2){$\hat{f}_2,\hat{f}_3$};
+%			\end{tikzpicture}}
+%	}
+%	}
+%	\caption{The plots of $\hat{f}_t(`a)$ and $\hat{f}(`a)$ against $`a$ for Example~\ref{eg:claw}}
+%	\label{fig:P:claw}
+%\end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+%%Figs.~\ref{fig:eg-two-chains-beta0} and \ref{fig:eg-two-chains-beta1} show plots (against $`a$) of the functions $g(`a,`b)$
+%%(blue, see \eqref{eq:alpha-beta-community} or \eqref{eq:g-community}), $g_{t}(`a,`b)$
+%%(solid black, see \eqref{eq:g-candidate}), and
+%%$f_{\alpha\beta}(C)$ (dashed black) (for the relevant subsets $C\subseteq V$).
+%%The figures and the communities in \eqref{eq:eg-two-chains} are obtained in a similar manner to Example~\ref{eg:chain} as summarized below.
+%
+%
+%Figs.~\ref{fig:eg-claw-beta0} and \ref{fig:eg-claw-beta1} show plots (against $`a$) of the functions $\hat{f}(`a)$
+%(blue, see \eqref{eq:alpha-beta-community} or \eqref{eq:g-community}), $\hat{f}_{t}(`a)$
+%(solid black, see \eqref{eq:g-candidate}), and
+%$f_{\alpha}(C)$ (dashed black).
+%The figures and the communities in \eqref{eq:eg-claw} are obtained in a similar manner to Example~\ref{eg:chain} as summarized below.
+%
+%
+%For $\beta \!\! = \!\!   0$,
+%\begin{align*}
+%	\begin{array}{ll}
+%		C_{\alpha,0,0} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{0}, & \!\!\!\! \alpha \geq 1
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < 1
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!\!\!\!	\hat{f}_{0}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha+3, & \alpha \geq 1
+%			\\
+%		\!\!\!	4\alpha, & \alpha < 1
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,0,1} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{1}, & \!\!\!\! \alpha \geq 3
+%			\\
+%		\!\!\!	\Set{0,1}, & \!\!\!\! \alpha \in [2,3)
+%			\\
+%	\!\!\!		\Set{0,\!1,\!2,\!3}, & \!\!\!\!  \alpha < 2
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!\!\!\!	\hat{f}_{1}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha+7, & \!\!\! \alpha \geq 3
+%			\\
+%		\!\!\!	2\alpha+4, & \!\!\! \alpha \in [2,3)
+%			\\
+%		\!\!\!	4\alpha, & \!\!\! \alpha < 2
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,0,2} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{2}, & \!\!\!\! \alpha \geq \frac{2}{3}
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < \frac{2}{3}
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%\!\!\!	\!\!\!	\hat{f}_{2}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha+2, & \alpha \geq \frac{2}{3}
+%			\\
+%		\!\!\!	4\alpha, & \alpha < \frac{2}{3}
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,0,3} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%	\!\!\!		\Set{3}, & \!\!\!\! \alpha \geq \frac{2}{3}
+%			\\
+%	\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < \frac{2}{3}
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!\!\!\!	\hat{f}_{3}(\alpha) \!\! = \!\!  
+%		\hat{f}_{2}(\alpha)
+%	\end{array}
+%\end{align*}
+%Hence,
+%\begin{align*}
+%	\hat{f}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{lll}
+%		\!\!\!	\alpha+2, & \alpha \geq \frac{2}{3}, & \text{solved by $\Set{2}, \Set{3}$}
+%			\\
+%		\!\!\!	4\alpha, & \alpha < \frac{2}{3}, & \text{solved by $\Set{0,1}$.}
+%		\end{array}
+%		\right.
+%\end{align*}
+%
+%
+%
+%For $\beta \!\! = \!\!   1$,
+%\begin{align*}
+%	\begin{array}{ll}
+%		C_{\alpha,1,0} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{0}, & \!\!\!\! \alpha \geq 6
+%			\\
+%		\!\!\!	\Set{0,1}, & \!\!\!\! \alpha \in [4,6)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < 4
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!\!\!\!\!\!\!	\hat{f}_{0}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha, &\!\!\!\!  \alpha \geq 6
+%			\\
+%		\!\!\!	2\alpha-6, & \!\!\!\! \alpha \in [4,6)
+%			\\
+%		\!\!\!	4\alpha-14, & \!\!\!\! \alpha < 4
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,1,1} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{1}, & \!\!\!\! \alpha \geq 6
+%			\\
+%		\!\!\!	\Set{0,1}, & \!\!\!\! \alpha \in [4,6)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < 4
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!\!\!\!\!\!\!	\hat{f}_{1}(\alpha) \!\! = \!\!   \hat{f}_{0}(\alpha)
+%		%%%%%%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,1,2} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\Set{2}, & \!\!\!\! \alpha \geq 5
+%			\\
+%		\!\!\!	\Set{0,1,2}, & \!\!\!\! \alpha \in [4,5)
+%			\\
+%		\!\!\!	\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < 4
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!\!\!\!\!\!\!	\hat{f}_{2}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%		\!\!\!	\alpha, &\!\!\!\!  \alpha \geq 5
+%			\\
+%		\!\!\!	3\alpha-10, & \!\!\!\! \alpha \in [4,5)
+%			\\
+%		\!\!\!	4\alpha-14, & \!\!\!\! \alpha < 4
+%		\end{array}
+%		\right.
+%		%%%%%%%%%%%%%%%%%%%
+%		\\
+%		C_{\alpha,1,3} \!\! = \!\!   \left\{
+%		\begin{array}{ll}
+%	\!\!\!		\Set{3}, & \!\!\!\! \alpha \geq 2.5
+%			\\
+%	\!\!\!		\Set{0,1,3}, &\!\!\!\!  \alpha \in [2,2.5)
+%			\\
+%	\!\!\!		\Set{0,\!1,\!2,\!3}, & \!\!\!\! \alpha < 2
+%		\end{array}
+%		\right.
+%	\!\!\!	,
+%		&
+%	\!\!\!	\hat{f}_{3}(\alpha) \!\! = \!\!   \hat{f}_{2}(\alpha).
+%	\end{array}
+%\end{align*}
+%Hence,
+%\begin{align*}
+%	\hat{f}(\alpha) \!\! = \!\!   \left\{
+%		\begin{array}{lll}
+%		\!\!\!	\alpha, & \alpha \geq 6, & \text{solved by $\Set{0}, \dots, \Set{3}$}
+%			\\
+%		\!\!\!	2\alpha-6, & \alpha \in [4,6), & \text{solved by $\Set{0,1}$.}
+%			\\
+%		\!\!\!	4\alpha-14, & \alpha  < 4, & \text{solved by $\Set{0,\!1,\!2,\!3}$.}
+%		\end{array}
+%		\right.
+%\end{align*}

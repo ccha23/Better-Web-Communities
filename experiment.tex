@@ -1,0 +1,91 @@
+
+\section{Experimental results}
+\label{sec:experiment}
+
+
+
+%\begin{figure}
+%  \centering
+%  \def\figsep{.2cm}
+%  \def\dist{1}
+%  \def\disty{.9}
+%  \subcaptionbox{$`a\in [\frac{31}{20},\frac{27}{16}){;}`b = 0.7$\label{fig:1web}}{
+%    \includegraphics[width=0.29\linewidth]{web1center}
+%  }
+%  \hfill %\hspace{\figsep}
+%  \subcaptionbox{$`a\in [\frac{37}{20},\frac{58}{25}){;}`b = 0.85$\label{fig:2web}}{ %3*9+4*6-12 / 48-9 = 27+12 / 41 = 39/41
+%    \includegraphics[width=0.3\linewidth]{web2center2}
+%  }
+%  \hfill %\hspace{\figsep}
+%  \subcaptionbox{$`a\in [\frac{58}{25},\frac{75}{32}){;}`b = 0.85$\label{fig:2web2}}{ %3*9+4*6-12 / 48-9 = 27+12 / 41 = 39/41
+%    \includegraphics[width=0.3\linewidth]{web2center}
+%  }
+%  % \hspace{\figsep}
+%  % \subcaptionbox{\label{fig:mweb}}{
+%    
+%  % }
+%  \caption{Undirected web graphs with boxes showing web centers identified as $(`a,`b)$-communities for the range of $`a$ and $`b$ specified. There are no other $(`a,`b)$-communities except the entire set of nodes for $`a$ smaller than the specified range.}
+%  \label{fig:web-center}
+%\end{figure}
+%
+%\begin{figure}
+%  \centering
+%  \def\figsep{.4cm}
+%  \def\dist{1}
+%  \def\disty{.9}
+%  \subcaptionbox{$`a\in [\frac{1}{8},\frac1{2})$\label{fig:1web-cc}}{
+%    \includegraphics[width=0.3\linewidth]{web1peripheral}
+%  }
+%  \hfill %\hspace{\figsep}
+%  \subcaptionbox{$`a\in [\frac1{2},1)$\label{fig:1web2-cc}}{% 
+%    \includegraphics[width=0.3\linewidth]{web1peripheral2}
+%  }
+%  \hfill %\hspace{\figsep}
+%  \subcaptionbox{$`a\in [\frac4{41},1)$\label{fig:2web-cc}}{% 
+%    \includegraphics[width=0.3\linewidth]{web2peripheral}
+%  }
+%  % \hspace{\figsep}
+%  % \subcaptionbox{\label{fig:mweb}}{
+%    
+%  % }
+%  \caption{Boxes showing all the communities returned by cut-clustering within the given range of $`a$. The other communities returned are singletons for larger $`a$ and the entire set for smaller $`a$.}
+%  \label{fig:web-peripheral}
+%\end{figure}
+
+\input{figure-web3.tex}
+
+To illustrate the benefits of the proposed communities over cut-clustering for larger networks than
+those in \figref{fig:eg12}, we implemented and tested both algorithms on the graphs in
+Figs.~\ref{fig:oneweb} and \ref{fig:twowebs}. The graph in \figref{fig:oneweb} contains a grid-like center,
+with peripheral-like chains of nodes attached to the grid's perimeter.
+The graph in Fig.~\ref{fig:twowebs} is similarly constructed, but with two grid-like centers.
+In both figures, it is desirable to differentiate the (denser) grid-like centers from the (sparser)
+peripherals.
+%centers, i.e., the peripherals of the webs consist of vertex disjoint chains. The goal is to detect
+%the web centers as communities since they are the denser subgraphs.
+
+The desired center is identified as a community in Fig.~\ref{fig:oneweb-community}, while
+cut-clustering only returns undesirable solutions Fig.~\ref{fig:oneweb-cut1} and
+\ref{fig:oneweb-cut1}. (See Fig.~\ref{fig:oneweb} caption for details.) 
+Note that the desired center is not a web-community sice each of its four courner nodes does not
+satisfy \eqref{eq:support-community}, which demonstrates the benefit of choosing $\beta > 0$.
+This also explains the undesirable behaviour of cut-clustering since a cut-cluster allows at most
+one of its members to violate \eqref{eq:support-community} \cite[Lemma~3.1]{flake:cut-clustering}.
+(See Appendix~\ref{sec:comparison-cut} for more details.) Similar observations can be made using
+Fig.~\ref{fig:twowebs}, where it is not hard to see that the same issues extend to larger, and other
+types of, graphs.
+More experimental results on synthetic and real-world data sets can be found in
+Appendix~\ref{sec:comparison-other}.
+
+
+
+%To illustrate the benefits of the proposed communities over cut-clustering for larger networks than those in \figref{fig:eg12}, we implemented and tested both algorithms on the graphs in \figref{fig:web-center}. Note that all the graphs in \figref{fig:web-center} contains web centers, each of which consist of nodes interconnected into $2$-by-$2$ grids. The nodes between different web centers, i.e., the peripherals of the webs consist of vertex disjoint chains. The goal is to detect the web centers as communities since they are the denser subgraphs.
+%
+%As indicated in \figref{fig:web-center}, all web centers are returned as communities when $`a$ and $`b$ are sufficiently large. In contrast, cut-clustering always fail to return the web centers regardless of the choice of $`a$. Instead, the peripherals are returned as shown in \figref{fig:1web-b}, \figref{fig:1web-c}. This is expected because, by \cite[Lemma~3.1]{flake:cut-clustering}, all but one node in a cut cluster must satisfy the condition~\eqref{eq:support-community}. Web centers cannot be cut clusters because their four corner points do not satisfy \eqref{eq:support-community}, e.g., Node 8 in the web center of \figref{fig:1web} and Node 12 in the web center of \figref{fig:2web} has the same number of internal and external edges. The experiments confirm that the internal support plays an important role in identifying the web centers as communities, and so our proposed solution can strictly improves over the previous solution. Following the same logic, it is not difficult to see that the same issue may arise regardless of the number of web centers or how far apart they are. The same problem can also arise in other types of graphs.
+%
+
+% Consider the web-spider graph in \figref{fig:web}, which is an undirected graph with edges of unit weight. Cut clustering returns only the four legs and their segments as communities but not the center four more interconnected nodes. (show ...) However, the center is a meaningful community and is returned as an $(`a,`b)$-community for (range of alpha and value of beta).
+
+% \figref{} shows another example where there are more than one web centers. Again, our approach finds the web centers but cut-clustering only returns the leg segments instead of the web centers.
+
+% \figref{} shows another example with more legs and a larger center. Indeed, the center is not a supporting community due to the many external connections to the legs. Again, our approach returns the center but cut-clustering does not. 

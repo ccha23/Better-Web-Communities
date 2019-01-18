@@ -1,0 +1,188 @@
+\section{Proofs}
+\label{sec:proofs}
+
+\begin{Proof}[Proposition~\ref{pro:single-deviation}] 
+	
+	For all $i\in C$, we have $C\backslash \Set{i}$ is a feasible solution to
+	\eqref{eq:alpha-beta-community} since $|C| \geq 2$, and so by the optimality of $C$
+	$$f(C) + \alpha \ccdot |C| < f(C\backslash \Set{i}) + \alpha \ccdot
+	|C\backslash \Set{i}|,$$
+	where the inequality is strict by the minimality of $C$. 
+	Hence,
+	\begin{align*}
+	\alpha &< f(C) - f(C\backslash \{i\}) 
+	\\ &
+	= (1-\beta)\ccdot \big[w(V\backslash C,i) - w(i,C) \big] - \beta\ccdot \big[w(C,i) + w(i,C) \big]
+	\\ &
+	= w(V\backslash C,i) - w(i,C)  - \beta\ccdot w(V,i),
+	\end{align*}
+	which gives \eqref{eq:single-shrink} as desired. \eqref{eq:single-expand} can be proved similarly by considering $C\cup \Set{i}$ for $i$ in $V`/C$ instead.
+	Similarly, we can prove 
+	
+%	For all $i\in C$, we have $C\backslash \Set{i}$ is a feasible solution to
+%	\eqref{eq:alpha-beta-community} since $|C| \geq 2$, and so by the optimality of $C$
+%	$$f_{\beta}(C) + \alpha \ccdot |C| < f_{\beta}(C\backslash \Set{i}) + \alpha \ccdot
+%	|C\backslash \Set{i}|,$$
+%	where the inequality is strict by the minimality of $C$. 
+%	Hence,
+%	\begin{align*}
+%		\alpha &< f_{\beta}(C) - f_{\beta}(C\backslash \{i\}) 
+%		\\ &
+%		= (1-\beta)\ccdot \big[w(V\backslash C,i) - w(i,C) \big] - \beta\ccdot \big[w(C,i) + w(i,C) \big]
+%		\\ &
+%		= w(V\backslash C,i) - w(i,C)  - \beta\ccdot w(V,i),
+%	\end{align*}
+%	which gives \eqref{eq:single-shrink} as desired. \eqref{eq:single-expand} can be proved similarly by considering $C\cup \Set{i}$ for $i$ in $V`/C$ instead.
+%        Similarly, we can prove 
+        
+%	By the definition of community \eqref{eq:alpha-beta-community}, we have
+%	$f_{\beta}(C) + \alpha \ccdot |C| \leq f_{\beta}(C') + \alpha \ccdot |C'|$ for any
+%	$C' \subseteq V: t\in C'$, where the inequality is strict whenever $C'\subsetneq C$. 
+%	Hence, \eqref{eq:single-shrink} and \eqref{eq:single-expand} follow by, respectively, choosing $C' = C\backslash \{i\}$ and
+%	$C' = C \cup \{i\}$ and noting that
+%	\begin{align*}
+%	f_{\beta}(C\backslash \{i\}) &= f_{\beta}(C) + w(i,C) - w(V\backslash C, \{i\}) + \beta d_{i}, \ \forall i\in C\backslash \{t\}, 
+%	\\ 
+%	f_{\beta}(C\cup \{i\}) &= f_{\beta}(C)  - w(i,C) + w(V\backslash C, \{i\})  - \beta d_{i}, \ \forall i\in V\backslash C.
+%	\end{align*}
+%%	Since $C$ is the inclusion-wise minimum $s$--$t$ mincut, we have
+%%	$w(\{s\}\cup V\backslash C, C) \leq w(\{s\}\cup V\backslash C', C') $
+%%	for any $C' \subseteq V : t\in C'$, where, due to the
+%%	minimality of $C$, the inequality is strict whenever $C' \subsetneq C$.
+%%	Now \eqref{eq:single-shrink} and \eqref{eq:single-expand} follow by, respectively, choosing $C' = C\backslash \{i\}$ and
+%%	$C' = C \cup \{i\}$ and noting that
+%%	$$w(\{s,i\} \cup (V\backslash C), C\backslash \{i\}) =  w(\{s\}\cup V\backslash C, C) - \alpha + \beta d_{i} + w(i,C) - w(V\backslash C, \{i\}), \ \forall i\in C\backslash \{t\},$$
+%%	$$w(\{s\} \cup V\backslash (C\cup \{i\}), C\cup \{i\}) =  w(\{s\}\cup V\backslash C, C) + \alpha - \beta d_{i} - w(i,C) + w(V\backslash C, \{i\}), \ \forall i\in V\backslash C.$$
+\end{Proof}
+
+\begin{Proof}[Proposition~\ref{prop:cut-clusters-from-candidates}]
+  With $`b=0$, we have $f(C)=w(V`/C,C)$ and so $C_{`a`bt}$ is the
+  inclusion-wise minimum solution to
+  \begin{align*}
+    \min_{C\in V:t\in C} w(V`/C,C) + `a\abs{C}.
+  \end{align*}
+  Consider adding a new node $s\not\in V$ to the graph and an
+  undirected edge from $s$ to each node $i\in V$ with edge weight
+  $`a$. It can be shown easily that a solution $C$ to the above
+  minimization gives an $s$-$t$ mincut $(V`/C,C)$ of the augmented graph and
+  vice versa, and so $C_{`a`bt}$ coincides with the definition of
+  communities in \cite[Lemma~3.1]{flake:cut-clustering}. Since
+  cut-clustering returns a partition of $V$, the returned communities
+  are the maximal candidates.
+  
+%  With $`b=0$, we have $f_{`b}(C)=w(V`/C,C)$ and so $C_{`a`bt}$ is the
+%  inclusion-wise minimum solution to
+%  \begin{align*}
+%  \min_{C\in V:t\in C} w(V`/C,C) + `a\abs{C}.
+%  \end{align*}
+%  Consider adding a new node $s\not\in V$ to the graph and an
+%  undirected edge from $s$ to each node $i\in V$ with edge weight
+%  $`a$. It can be shown easily that a solution $C$ to the above
+%  minimization gives an $s$-$t$ mincut $(V`/C,C)$ of the augmented graph and
+%  vice versa, and so $C_{`a`bt}$ coincides with the definition of
+%  communities in \cite[Lemma~3.1]{flake:cut-clustering}. Since
+%  cut-clustering returns a partition of $V$, the returned communities
+%  are the maximal candidates.
+
+\end{Proof}
+
+
+
+\begin{Proof}[Theorem~\ref{thm:hierarchy}]
+  When $`a_1 \geq `a_2$, suppose to the contrary that
+  \begin{align}
+    C_1\not \subseteq C_2 \kern1em \text{ and }\kern1em C_1\cap C_2\neq `0. \label{eq:h:1}
+  \end{align}
+  By the submodularity~\eqref{eq:submodular} of $f$, we have 
+  \begin{align}
+    f(C_1) - f(C_1\cap C_2) \geq f(C_1\cup C_2) - f(C_2) \label{eq:h:2}
+  \end{align}
+  Since $`a_1\geq `a_2$, and $\abs{C_1} - \abs{C_1\cap C_2}
+  = \abs{C_1\cup C_2} - \abs{C_2} \geq 0$, we also have
+  \begin{align}
+    `a_1 `1[\abs{C_1}- \abs{C_1\cap C_2}`2]
+    \geq  `a_2 `1[\abs{C_1\cup C_2} - \abs{C_2}`2]. \label{eq:h:3}
+  \end{align}
+  Adding \eqref{eq:h:3} to \eqref{eq:h:2} side by side, we have
+  \begin{align*}
+    f_{`a_1}(C_1) - f_{`a_1}(C_1\cap C_2) \geq f_{`a_2}(C_1\cup C_2) - f_{`a_2}(C_2).
+  \end{align*}
+  Note that the l.h.s.\ is strictly smaller than $0$ because $C_1$ is a minimal solution to \eqref{eq:alpha-beta-community} for $`a=`a_1$. Since $C_2$ is optimal for $`a=`a_2$, The r.h.s.\ is at least $0$, which is the desired contradiction.
+  
+  When $C_1\subsetneq C_2$, since $C_1$ is the minimal solution to \eqref{eq:alpha-beta-community} for $`a=`a_1$, we have 
+  \begin{align*}
+  f_{`a_1}(C_1) \leq f_{`a_1}(C_2),
+  \end{align*}
+  which means 
+  \begin{align}
+  f(C_1) + `a_1 \abs{C_1} \leq f(C_2) + `a_1 \abs{C_2}. \label{eq:h:4}
+  \end{align}
+  Since $C_2$ is the minimal solution to \eqref{eq:alpha-beta-community} for $`a=`a_2$, we have 
+  \begin{align*}
+  f_{`a_2}(C_2) < f_{`a_2}(C_1),
+  \end{align*}
+  which means 
+  \begin{align}
+  f(C_2) + `a_2 \abs{C_2} < f(C_1) + `a_2 \abs{C_1}. \label{eq:h:5}
+  \end{align}
+  Adding \eqref{eq:h:4} to \eqref{eq:h:5} side by side, we have
+  \begin{align*}
+  `a_1 `1[\abs{C_1} - \abs{C_2}`2] < `a_2 `1[\abs{C_1} - \abs{C_2}`2].
+  \end{align*}
+  Since $\abs{C_1} - \abs{C_2} < 0$, so we get $`a_1 > `a_2$.
+  
+  
+%  Suppose to the contrary that
+%  \begin{align}
+%  C_1\not \subseteq C_2 \kern1em \text{ and }\kern1em C_1\cap C_2\neq `0. \label{eq:h:1}
+%  \end{align}
+%  By the submodularity~\eqref{eq:submodular} of $f_{`b}$, we have 
+%  \begin{align}
+%  f_{`b}(C_1) - f_{`b}(C_1\cap C_2) \geq f_{`b}(C_1\cup C_2) - f_{`b}(C_2) \label{eq:h:2}
+%  \end{align}
+%  Since $`a_1\geq `a_2$, we also have
+%  \begin{align}
+%  `a_1 `1[\abs{C_1}- \abs{C_1\cap C_2}`2]
+%  \geq `a_2 `1[\abs{C_1} - \abs{C_1\cap C_2}`2]
+%  = `a_2 `1[\abs{C_1\cup C_2} - \abs{C_2}`2]. \label{eq:h:3}
+%  \end{align}
+%  Adding \eqref{eq:h:3} to \eqref{eq:h:2} side by side, we have
+%  \begin{align*}
+%  f_{`a_1`b}(C_1) - f_{`a_1`b}(C_1\cap C_2) \geq f_{`a_2`b}(C_1\cup C_2) - f_{`a_2`b}(C_2).
+%  \end{align*}
+%  Note that the l.h.s.\ is strictly smaller than $0$ because $C_1$ is a minimal solution to \eqref{eq:alpha-beta-community} for $`a=`a_1$. Since $C_2$ is optimal for $`a=`a_2$, The r.h.s.\ is at least $0$, which is the desired contradiction.
+  
+\end{Proof}
+
+
+\begin{Proof}[Theorem~\ref{thm:f-shrink-expand}]
+  By the optimality of $C$, we have 
+  \begin{align*}
+    f(C) + \alpha \ccdot |C| \leq f(C') + \alpha\ccdot |C'|
+  \end{align*}
+  for all $C'\subseteq V:|C'|\geq 1$, where, by the minimality of $C$, the inequality is strict if
+  $C'\subsetneq C$.
+\end{Proof}
+
+
+\begin{Proof}[Theorem~\ref{thm:mc}]
+%	From 
+%	\[
+%		w(V\backslash\{i\}) = w(C\backslash \{i\}, \{i\}) + 
+%	\]
+  %Towards this end, l
+  Let $C$ be any $s$--$t$ cut of the augmented graph,
+	then from the definition of the augmented digraph, we have
+	\\ $w(\{s\} \cup V\backslash C, C)$
+	\begin{align}
+		 \hspace*{0.8cm}& = \! w(V\backslash C,C)  \!+ \! \beta \!\! \! \sum_{i\in V\backslash C}  \!\!\! w(V\backslash \{i\},\{i\})  \! + \! \alpha\!
+		 \cdot \! |C| 
+		\\ &= \!
+		f(C)  \!+ \! \alpha\! \cdot \! |C| \!+\! \beta \big[ w(C,C)  \notag
+		\\& \hspace{1cm} +  w(V\backslash C,C) +  \! \! \!\! \sum_{i\in V\backslash C}  \! \!\!\! w(V\backslash \{i\},\{i\}) \big]
+		\\ &=  \!
+		f(C)  \!+ \! \alpha\! \cdot \! |C|  \!+ \! \beta \sum_{i\in V}   \!  w(V\backslash \{i\}, \{i\}),
+	\end{align}
+	where the last equality follows by noting that $\sum_{i\in C}w(V\backslash \{i\},\{i\}) = w(C,C) + w(V\backslash C, C)$.
+\end{Proof}
+

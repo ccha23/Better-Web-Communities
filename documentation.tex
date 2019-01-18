@@ -1,0 +1,78 @@
+\section{Documentations of the source code}
+\SetKwFunction{dominate}{find\textunderscore dominate\textunderscore community()}
+\SetKwFunction{alphabeta}{C\textunderscore alpha\textunderscore beta\textunderscore t}
+\SetKwFunction{valpha}{alpha}
+\SetKwFunction{communities}{communities}
+\SetKwFunction{community}{community}
+%\SetKwFunction{networkx}{networkx}
+
+The implementation of
+“Detecting  Communities with More Internal Links than External Incoming Links” is available on GitHub \url{https://github.com/handasontam/Alpha-Beta-Communities}.
+In the github repository, we provide a jupyter notebook for demonstration. 
+We can use binder service \cite{ragan2018binder} to directly run the interactive jupyter notebook on browser.
+% More example usage can be found in the Jupyter
+% Notebook: examples.ipynb. Documentation of the function can be found in the
+% docstring. An example can be found at the end of this document. This document
+% will explain the implementation in high level.
+% The code is written in Python with the following dependencies:
+
+% \begin{itemize}
+% \item Python 3.*
+% \item Networkx 2.1 (for handling graph operations)
+% \item igraph 0.7.1    (for computing max-flow-min-cut)
+% \item numpy 1.14.*
+% \end{itemize}
+
+% The main function to use is the $\dominate$, Given a networkx
+% graph, beta, it will return two dictionary: $\communities$ and $\valpha$. For
+% $\communities$, it is indexed by the cardinality of the solution and the value is
+% a frozenset of vertex id in the original graph. For $\valpha$, it is also indexed
+% by the cardinality, and the value is a floating point number which indicates
+% the value of $`a$ of the intersection at that particular solution. The example
+% usage shown at the end shows how to interpret it as a range of values.
+
+% There are two main phases in the $\dominate$. First, we will go
+% over each node and apply max-flow-min-cut on the augmented graph 
+% to find $\alphabeta$ for every $`a\geq 0$. Meanwhile, we will update the community
+% and alpha solution if the $\alphabeta$ has a smaller cut.
+
+% Once we find out all the possible solutions, we enter the second phase for finding the lowest piecewise linear curve. This will filter out some solutions that are found earlier.
+
+% Finally, we will return the filtered $\community$ and $\valpha$.
+
+% Note that in this implementation, we use a similar approach as \cite{nagano2011size} to find the minimizers of $\alphabeta$ instead of the parametric maxflow that we mentioned in Section~\ref{sec:computation}.
+
+% Example Usage:
+
+
+% \begin{lstlisting}[breaklines,language=Python]
+% import abcommunities
+% import networkx as nx
+
+% G = nx.ring_of_cliques(num_cliques=8, clique_size=5).to_directed()
+% communities, alpha = abcommunities.find_dominate_community(G, 0.7, verbose=0)
+% for cardinality, community in sorted(communities.items()):
+%     print('alpha: ', alpha[cardinality])
+%     print('cardinalidy: ', cardinality, '\ncommunity:', set(community), '\n')
+
+% # Output
+% # For multiple solutions with the same cardinality achieving the same error, we will only provide one solution
+
+% alpha:  3.6499999999999995
+% cardinalidy:  1 
+% community: {2} 
+
+% alpha:  3.1371428571428566
+% cardinalidy:  5 
+% community: {0, 1, 2, 3, 4} 
+
+% alpha:  0
+% cardinalidy:  40 
+% community: {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39}
+
+% # The alpha value can be interpret as a range (larger alpha will lead to a community of smaller size):
+% # {2} for alpha >= 3.65
+% # {0, 1, 2, 3, 4} for 3.65 > alpha >= 3.1371428571428566
+% # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39} for 3.1371428571428566 > alpha > 0
+% \end{lstlisting}
+

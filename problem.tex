@@ -1,0 +1,122 @@
+\section{A better formulation}
+\label{sec:problem}
+ 
+We propose the following more sophisticated definition of communities parameterized by different quality requirements. The communities will be shown to have a meaningful hierarchical structure that can be computated and represented in polynomial-time using maxflow algorithms.
+
+\begin{definition}
+  \label{def:alpha-beta}
+  Given $\beta\in [0,1]$, define for $\alpha\in `R$
+        \begin{subequations}
+          \label{eq:alpha-beta-community}
+          \begin{align}
+            \hat{f}(`a)&:=\min_{C\subseteq V:\abs{C}\geq 1} f_{`a}(C) \quad \text{where}\label{eq:fhat}\\
+            f_{`a}(C)&:=f(C) + `a \ccdot |C| \label{eq:fab}\\
+            f(C)&:=(1-`b)\ccdot w(V`/ C, C) - `b \ccdot w(C,C),\label{eq:fb}
+          \end{align}
+        \end{subequations}
+        where we have made the dependency on $`b$ implicit for notational simplicity. The set of communities is defined as
+        \begin{align}
+          \mcC := \bigcup\nolimits_{`a\in `R} \mcS_{`a}\label{eq:mcC}
+        \end{align}
+        where $\mcS_{`a}$ is defined as the collection of $C\subseteq V$ such that $\abs{C}>1$, i.e., $C$ is non-singleton, and
+        \begin{align}
+          f_{`a}(C)=\hat{f}(`a)< \min_{B\subsetneq C:\abs{B}\geq 1} f_{`a}(B),\label{eq:mcS}
+        \end{align}
+        i.e., $C$ is an inclusion-wise minimal solution \eqref{eq:alpha-beta-community}. For each community $C\in \mcC$, we define
+        \begin{align}
+          `s(C) := \sup\Set*{`a\in `R \mid C\in \mcS_{`a}}\label{eq:`s}
+        \end{align}
+        as a measure of the strength of the community.
+\end{definition}
+
+Subsequently, unless explicitly specified otherwise, a community will always refer to one according
+the definition above. 
+In the definition,
+the parameters $\alpha$ and $\beta$ allow for a tuning of the quality of the communities.
+Namely, the cost function $f(C)$~\eqref{eq:fb} penalizes the \emph{external influence}
+$w(V`/ C, C)$ and rewards the \emph{internal influence} $w(C,C)$. Since the entire set $V$
+trivially minimizes the external influence and maximizes the internal influence, we further penalize the
+size of $C$ in the objective function $f_{`a}$~\eqref{eq:fab} with $`a\geq 0$ to obtain more compact
+communities. A simple connection to web communities is given by the following result, which provides a strong guarantee on the quality of the communities than that of the cut-clusters in~\cite[Lemma~3.1]{flake:cut-clustering}.
+
+
+\begin{proposition}
+	\label{pro:single-deviation}
+        Every $C\in \mcS_{`a}$ defined with \eqref{eq:mcS} satisfies
+	\begin{subequations}
+          \label{eq:single}
+	\begin{alignat}{2}
+          \label{eq:single-shrink}
+          w(i,C) &> w(V`/ C, i) + (\alpha - \beta d_{i}) &\kern 5pt& \forall i \in C ,\\
+          \label{eq:single-expand}
+          \kern-.5em w(V`/ C, i) &\geq w(i,C) - (\alpha - \beta d_{i}) && \forall i \in V `/ C,
+	\end{alignat}
+	where $d_{i}:=w(V`/\Set{i},i)$ is the in-degree of vertex $i$.
+      \end{subequations}
+      %(The reverse, but non-strict, inequality holds for $i\in V`/ C$.)
+\end{proposition}
+\begin{corollary}
+  \label{cor:alpha-beta-supporting}
+  A community $C\in \mcC$ defined in \eqref{eq:mcC} is a web community if
+	%\begin{align}
+	$
+		`s(C) > \beta \max_{i\in C} d_i.
+	$
+	%\end{align}
+\end{corollary}
+
+% Comparing \eqref{eq:single-shrink} to the defining condition \eqref{eq:support-community} of a
+% web community, the parameter $\alpha$ strengthens the condition by enlarging the gap between the
+% internal support $i$ provides to the community and the external support $i$ receives from outside
+% the community, thereby leading to web communities with larger internal support relative to
+% external support. In particular, we have the following condition for an $(\alpha,\beta)$-community
+% to be a web community. (Trivially holds when $\beta = 0$.)
+
+%Equation~\eqref{eq:single-shrink} relates communities and web-communities by providing a handle on the deviation
+%between the two in terms of the gap between the internal and external influences. For instance, for
+Equation~\eqref{eq:single-shrink} relates communities and web-communities by 
+bounding the gap between the internal and external influences in terms of the community
+parameters. For instance, for
+$\beta = 0$, a community is always a web-community for $\alpha\geq 0$, and, moreover, $\alpha$ 
+provides a lower bound on the gab between the internal and external influences.
+%Note that the parameter $\beta$ appears to diminish the gap between the
+%internal and external support as can be seen from \eqref{eq:single-shrink}. Contrary to its 
+%apparent undesirable effect, the parameter $\beta$ is one of the main
+%contributions in this work which is introduced here to improve on an important limitation of the
+%previous approach in \cite{flake:cut-clustering}. Indeed, we argue that there can also be meaningful communities that are not web communities, and that they cannot be identified unless $`b>0$.
+Note that while the parameter $\beta$ might appear to have an undesirable effect by diminishing the gap between the
+internal and external support, and so leading to communities that are not web-communities,
+it is one of the contributions we claim in this work.
+%which is introduced here to improve on an important limitation of the previous approach in \cite{flake:cut-clustering}.
+Indeed, as will be argued in a subsequent section, there can be meaningful communities that may or
+may not be web communities, and they cannot be identified unless $`b>0$.
+
+
+
+\begin{Proof}[Sketch]
+  \eqref{eq:single-shrink} follows from that fact that $C`/\Set{i}$ for any $i\in C$ and $C\in \mcC$ is a strictly
+  suboptimal solution to \eqref{eq:alpha-beta-community}, while \eqref{eq:single-expand} follows
+  from the fact that $C\cup \Set{i}$ for any $i\in V`/C$ is a feasible but not necessarily optimal
+  solution. The corollary follows from \eqref{eq:single-shrink} since $C\in \mcS_{`a}$ for some $`a$
+  arbitrarily close to $`s(C)$ by the definition~\eqref{eq:`s} of $`s(C)$.
+\end{Proof}
+
+The following example illustrates the definition of the communities and its desired property.
+\begin{example}
+  \label{eg:mcC}
+  Consider \figref{fig:eg-disconnected} as in Example~\ref{eg:too-many-communities}. Assuming $`b=0$, we have $f(C)=w(V`/C,C)$ by \eqref{eq:fb}. It is easy to see that $\hat{f}(0)=0$ because the solution to \eqref{eq:fhat} when $`a=0$ are the unions of the matched pairs $C_i:=\Set{2i,2i+1}$ for $0\leq i<n/2$. By \eqref{eq:mcS}, $\mcS_0$ is the set of matched pairs $C_i$'s since they are inclusionwise minimal solutions that are non-singleton. Similarly, it is straightforward to show that for
+  \begin{itemize}
+	  \setlength\itemsep{-.8em}
+	  \item $`a<0$: $\hat{f}(`a) = `a\abs{V}$ and $\mcS_{`a}=\Set{V}$.\\
+	  \item $`a\in [0,1)$: $\hat{f}(`a) = 2`a$ and $\mcS_{`a}=\Set{C_i\mid 0\leq i< n/2}$.\\
+	  \item $`a\geq 1$: $\hat{f}(`a) = 1+`a$ and $\mcS_{`a}=`0$.
+  \end{itemize}
+  By \eqref{eq:mcC}, the set $\mcC$ of communities consists of $V$ and the matched pairs $C_i$'s. By \eqref{eq:`s}, $`s(V)=0$ and $`s(C_i)=1$. By Corollary~\ref{cor:alpha-beta-supporting}, since $`s(C_i)>0=`b\sum_{i\in C}d_i$, $C_i$'s are web communities. 
+\end{example}
+
+In the above example, it can be seen that $\mcC$ captures the essential web communities for \figref{fig:eg-disconnected}, which form a meaningful hierarchy with respect to the quality measure $`s$. 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

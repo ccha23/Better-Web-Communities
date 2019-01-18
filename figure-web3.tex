@@ -1,0 +1,205 @@
+
+\usetikzlibrary{arrows,patterns}
+
+\pgfdeclarepatternformonly{soft crosshatch}{\pgfqpoint{-1pt}{-1pt}}{\pgfqpoint{4pt}{4pt}}{\pgfqpoint{3pt}{3pt}}%
+{
+  \pgfsetstrokecolor{blue}
+  \pgfsetstrokeopacity{0.3}
+  \pgfsetlinewidth{0.4pt}
+  \pgfpathmoveto{\pgfqpoint{3.1pt}{0pt}}
+  \pgfpathlineto{\pgfqpoint{0pt}{3.1pt}}
+  \pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+  \pgfpathlineto{\pgfqpoint{3.1pt}{3.1pt}}
+  \pgfusepath{stroke}
+}
+
+\tikzstyle{cut}=[fill=red, fill opacity=0.2,rounded corners,inner sep=0.1em]
+\tikzstyle{cluster}=[pattern=soft crosshatch, fill opacity=0.8,rounded corners,inner sep=0.1em]
+\tikzstyle{v}=[circle,draw,fill=gray!40,minimum size=2,transform shape]
+\tikzstyle{nodestyle}=[every node/.style={transform shape}]
+
+\begin{figure}
+\def\s{.3}
+\centering
+\subcaptionbox{\label{fig:oneweb-community}}{
+\begin{tikzpicture}[scale=\s]
+  \foreach \x in {0,...,6}
+    \foreach \y in {0,...,2} 
+       \node [v]  (a\x\y) at (\x,\y) {};
+
+  \foreach \y in {0,...,2}
+    \foreach \x [count=\xi] in {0,...,5}  
+      \draw (a\x\y)--(a\xi\y);
+
+
+  \foreach \x in {0,...,2}
+    \foreach \y in {0,...,6} 
+       \node [v]  (b\x\y) at (\x+2,\y-2) {};
+
+  \foreach \x in {0,...,2}
+    \foreach \y [count=\yi] in {0,...,5}  
+      \draw (b\x\y)--(b\x\yi);
+
+	\node[cluster,fit=(a20) (a42)] {};
+\end{tikzpicture}
+}
+%
+\subcaptionbox{\label{fig:oneweb-cut1}}{
+\begin{tikzpicture}[scale=\s]
+  \foreach \x in {0,...,6}
+    \foreach \y in {0,...,2} 
+       \node [v]  (a\x\y) at (\x,\y) {};
+
+  \foreach \y in {0,...,2}
+    \foreach \x [count=\xi] in {0,...,5}  
+      \draw (a\x\y)--(a\xi\y);
+
+
+  \foreach \x in {0,...,2}
+    \foreach \y in {0,...,6} 
+       \node [v]  (b\x\y) at (\x+2,\y-2) {};
+
+  \foreach \x in {0,...,2}
+    \foreach \y [count=\yi] in {0,...,5}  
+      \draw (b\x\y)--(b\x\yi);
+
+	\node[cut,fit=(a00) (b00)] {}; \node[cut,fit=(a62) (b26)] {};
+	\node[cut,fit=(a02) (b06)] {}; \node[cut,fit=(a60) (b20)] {};
+	\node[cut,fit=(a01) (a21)] {}; \node[cut,fit=(a41) (a61)] {};
+	\node[cut,fit=(b10) (b12)] {}; \node[cut,fit=(b14) (b16)] {};
+\end{tikzpicture}
+}
+%
+\subcaptionbox{\label{fig:oneweb-cut2}}{
+\begin{tikzpicture}[scale=\s]
+  \foreach \x in {0,...,6}
+    \foreach \y in {0,...,2} 
+       \node [v]  (a\x\y) at (\x,\y) {};
+
+  \foreach \y in {0,...,2}
+    \foreach \x [count=\xi] in {0,...,5}  
+      \draw (a\x\y)--(a\xi\y);
+
+
+  \foreach \x in {0,...,2}
+    \foreach \y in {0,...,6} 
+       \node [v]  (b\x\y) at (\x+2,\y-2) {};
+
+  \foreach \x in {0,...,2}
+    \foreach \y [count=\yi] in {0,...,5}  
+      \draw (b\x\y)--(b\x\yi);
+
+	\node[cut,fit=(a00) (a10)] {}; \node[cut,fit=(a50) (a60)] {};
+	\node[cut,fit=(a01) (a11)] {}; \node[cut,fit=(a51) (a61)] {};
+	\node[cut,fit=(a02) (a12)] {}; \node[cut,fit=(a52) (a62)] {};
+	\node[cut,fit=(b00) (b02)] {}; \node[cut,fit=(b04) (b06)] {};
+	\node[cut,fit=(b10) (b12)] {}; \node[cut,fit=(b14) (b16)] {};
+	\node[cut,fit=(b20) (b22)] {}; \node[cut,fit=(b24) (b26)] {};
+\end{tikzpicture}
+}
+  \caption{
+	  An example graph that exhibits a grid-like center that
+	  connects to threads of nodes along the grid's perimeter. Communities and cut-clusters are
+	  highlighted using a crosshatch (blue) and no-pattern (red) marks, respectively.
+	  (a) Shows the returned community for $\alpha \in [\frac{31}{20},\frac{27}{16})$ and $\beta = 0.7$, and 
+	  (b) the cut-clusters for $\alpha\in [\frac{1}{8},\frac{1}{2})$
+	  and (c) the cut-clusters for $\alpha\in [\frac{1}{2}, 1)$.
+	  There are no other non-trivial (i.e., the entire set) solutions.
+  }
+  \label{fig:oneweb}
+\end{figure}
+
+
+
+
+\begin{figure}
+\def\s{.28}
+%\centering
+\subcaptionbox{\label{fig:twowebs-community1}}{
+\begin{tikzpicture}[scale=\s]
+  \foreach \x in {0,...,9}
+    \foreach \y in {0,...,2} 
+       \node [v]  (a\x\y) at (\x,\y) {};
+
+  \foreach \y in {0,...,2}
+    \foreach \x [count=\xi] in {0,...,8}  
+      \draw (a\x\y)--(a\xi\y);
+
+
+  \foreach \x in {0,1,2, 5,6,7}
+    \foreach \y in {0,...,4} 
+       \node [v]  (b\x\y) at (\x+1,\y-1) {};
+
+  \foreach \x in {0,1,2, 5,6,7}
+    \foreach \y [count=\yi] in {0,...,3}  
+      \draw (b\x\y)--(b\x\yi);
+
+	\node[cluster,fit=(a10) (a82)] {};
+\end{tikzpicture}
+}
+%
+\subcaptionbox{\label{fig:twowebs-community2}}{
+\begin{tikzpicture}[scale=\s]
+  \foreach \x in {0,...,9}
+    \foreach \y in {0,...,2} 
+       \node [v]  (a\x\y) at (\x,\y) {};
+
+  \foreach \y in {0,...,2}
+    \foreach \x [count=\xi] in {0,...,8}  
+      \draw (a\x\y)--(a\xi\y);
+
+
+  \foreach \x in {0,1,2, 5,6,7}
+    \foreach \y in {0,...,4} 
+       \node [v]  (b\x\y) at (\x+1,\y-1) {};
+
+  \foreach \x in {0,1,2, 5,6,7}
+    \foreach \y [count=\yi] in {0,...,3}  
+      \draw (b\x\y)--(b\x\yi);
+%
+	\node[cluster,fit=(a10) (a32)] {};
+	\node[cluster,fit=(a60) (a82)] {};
+
+\end{tikzpicture}
+}
+%
+\subcaptionbox{\label{fig:twowebs-cut}}{
+\begin{tikzpicture}[scale=\s]
+  \foreach \x in {0,...,9}
+    \foreach \y in {0,...,2} 
+       \node [v]  (a\x\y) at (\x,\y) {};
+
+  \foreach \y in {0,...,2}
+    \foreach \x [count=\xi] in {0,...,8}  
+      \draw (a\x\y)--(a\xi\y);
+
+
+  \foreach \x in {0,1,2, 5,6,7}
+    \foreach \y in {0,...,4} 
+       \node [v]  (b\x\y) at (\x+1,\y-1) {};
+
+  \foreach \x in {0,1,2, 5,6,7}
+    \foreach \y [count=\yi] in {0,...,3}  
+      \draw (b\x\y)--(b\x\yi);
+
+	\node[cut,fit=(a00) (b00)] {}; \node[cut,fit=(a92) (b74)] {};
+	\node[cut,fit=(a01) (a11)] {}; \node[cut,fit=(a91) (a81)] {};
+	\node[cut,fit=(a02) (b04)] {}; \node[cut,fit=(a90) (b70)] {};
+
+	\node[cut,fit=(b10) (b11)] {}; \node[cut,fit=(b13) (b14)] {};
+	\node[cut,fit=(b20) (b21)] {}; \node[cut,fit=(b23) (b24)] {};
+	\node[cut,fit=(b50) (b51)] {}; \node[cut,fit=(b53) (b54)] {};
+	\node[cut,fit=(b60) (b61)] {}; \node[cut,fit=(b63) (b64)] {};
+\end{tikzpicture}
+}
+  \caption{
+	  %An example graph that resembles a spider's web in that it exhibits a grid-like center that
+	  %connects to threads of nodes along the grid's perimeter.
+	  Similar to Fig.~\ref{fig:oneweb}.
+	  (a) Shows the returned community for $\alpha \in [\frac{37}{20},\frac{58}{25})$ and $\beta = 0.85$, 
+	  (b) the communities for $\alpha\in [\frac{58}{25},\frac{75}{32})$ and $\beta = 0.85$,
+	  and (c) the cut-clusters for $\alpha\in [\frac{4}{41}, 1)$.
+	  There are no other, non-trivial, solutions.
+  }
+  \label{fig:twowebs}
+\end{figure}

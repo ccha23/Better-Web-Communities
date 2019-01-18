@@ -1,0 +1,344 @@
+
+\section{Computation}
+\label{sec:computation}
+
+In this section, we will derive a polynomial-time algorithm to returned the proposed community hierarchy $\mcC$ for any given $`b\in [0,1]$. The algorithm is available on GitHub.\footnote{\url{https://github.com/handasontam/Alpha-Beta-Communities}}
+
+\subsection{Divide-and-conquer}
+
+%For a clearer discussion in the next two sections,
+%we introduce the notion of community candidates in this section. Towards that end,
+We first rewrite \eqref{eq:alpha-beta-community} as a two-step minimization
+\begin{subequations}
+	\begin{align}
+		\label{eq:g-community}
+		\hat{f}(`a) = &\min_{t\in V} \hat{f}_{t}(`a), \text{ where } \\
+		\label{eq:g-candidate}
+		\hat{f}_{t}(`a) := & \min_{C\subseteq V:t\in C} f_{`a}(C)
+	\end{align}
+        and $f_{`a}$ is defined in \eqref{eq:fab}.
+\end{subequations}
+The minimization in \eqref{eq:g-candidate} has a unique inclusion-wise
+minimum solution due to a well-known result in submodular function
+minimization (see~\cite{fujishige05}), and the fact that $f_{}$ (and thereby $f_{\alpha}$)
+%is submodular~\eqref{eq:submodular}, i.e.,
+is submodular, i.e., $\forall C_1,C_2\subseteq V$,
+\begin{align}
+  f_{}(C_1)+f_{}(C_2) \geq f_{}(C_1\cup C_2) + f_{}(C_1\cap C_2). %, \forall C_1,C_2\subseteq V.
+  \label{eq:submodular}
+\end{align}
+This can be seen by rewriting $f_{}$, defined in \eqref{eq:fb}, using the identity $w(V`/C,C)+w(C,C)=\sum_{i\in C} d_i$ as
+\begin{align}
+  f_{}(C) = w(V`/C,C)-`b\sum_{i\in C} d_i,
+\end{align}
+which is submodular in $C$ since the graph cut $w(V`/C,C)$ and the sum $\sum_{i\in C} d_i$ are
+modular~\cite{fujishige05}.   
+
+\begin{definition}
+	\label{def:candidates}
+	For $`a \geq 0$, $`b\in [0,1]$, and $t\in V$, a community candidate, or
+	candidate for short, $C_{`a,t}$ is defined as the inclusion-wise minimum solution to the minimization
+	\eqref{eq:g-candidate}.
+\end{definition}
+(Similar to communities, we make the dependency on $\beta$ implicit for notational simplicity.)
+For a given $\beta \in [0,1]$, let $T^*_{`a}$ be the set of optimal solutions $t$ to the
+minimization \eqref{eq:g-community}, then we have the following proposition.
+%Note that the set of $(`a,`b)$-communities is the set of candidates $C_{`a`bt}$ such
+%that $|C_{`a`bt}| > 1$ and $t$ is an optimal solution to the outer minimization
+%\eqref{eq:g-community}.
+%\begin{proposition}
+%	\label{prop:communities-from-candidates}
+%	The set of inclusion-wise minimal solutions to \eqref{eq:alpha-beta-community} is given as 
+%	\begin{align}
+%		\op{minimal} \{C_{`a`bt} \mid |C_{`a`bt}| \geq 1, t\in T^*_{`a`b}\}, \label{eq:abt->ab}
+%	\end{align}
+%	where $\op{minimal}(\mcF)$ denotes the set of minimal elements in $\mcF$. Hence, the set of
+%	communities $\mcS_{`a}$ can be obtained by removing the singleton elements from the
+%	above.\footnote{Note again that \eqref{eq:abt->ab} with strict inequality $|C_{`a`bt}|> 1$
+%	instead can be a proper superset of
+%	$\mcC_{`a`b}$. 
+%    }
+%\end{proposition}
+\begin{proposition}
+	\label{prop:communities-from-candidates}
+	The set of inclusion-wise minimal solutions to \eqref{eq:alpha-beta-community} is equal to the
+	set of minimal candidates $C_{\alpha, t}$ s.t. $t\in T^{*}_{\alpha}$.
+	%Hence, the set of communities $\mcS_{`a}$ can be obtained from the above by removing the
+	%singleton elements, i.e., it is given as
+	In other words, the set of communities $\mcS_{`a}$ can be written as 
+	\begin{align}
+		%\op{minimal} \{C_{`a`bt} \mid |C_{`a`bt}| \geq 1, t\in T^*_{`a`b}\}, \label{eq:abt->ab}
+		\op{minimal} \{C_{`a, t} \mid t\in T^*_{`a}\} \ \backslash \ \{\Set{i} \mid i \in V\}, \label{eq:abt->ab}
+	\end{align}
+	%where $\op{minimal}(\mcF)$ denotes the set of minimal elements in $\mcF$.
+\end{proposition}
+%		\textcolor{magenta}{
+%			aaa--- By using $T^{*}_{\alpha^{\text{+}}\beta}$ instead of $T^{*}_{\alpha\beta}$, i.e.,
+%			\begin{align*}
+%				%\op{minimal} \{C_{`a`bt} \mid |C_{`a`bt}| \geq 1, t\in T^*_{`a`b}\}, \label{eq:abt->ab}
+%				\op{minimal} \{C_{`a`bt} \mid t\in T^*_{`a^{\text{+}}`b}\} \ \backslash \ \{\Set{i} \mid i \in V\},
+%				%\label{eq:abt->ab}
+%			\end{align*}
+%			where
+%		$\alpha^{\text{+}}-\alpha$ is an arbitrarily small positive number, the operator ``$\op{minimal}$'' can
+%		be kept, dropped, or reblaced with``$\op{maximal}$'' without affecting the set. Note that two candidates with
+%		memebers in $T^{*}_{\alpha^{\text{+}}\beta}$ must be equal or disjoint.  
+%		}
+    
+\begin{proof}
+	Follows directly from Definitions~\ref{def:alpha-beta} and \ref{def:candidates}.
+\end{proof}
+
+%%%%%%%%%%%%
+%The following example demonstrates the proposition and the above definitions.
+\begin{example}
+	\label{eg:chain-community}
+	Consider the undirected graph in Fig.~\ref{fig:eg-chain} with $V:=\Set{0,1,2,3}$.
+%
+	It is straightforward to enumerate all the web communities \eqref{eq:support-community} as
+	\begin{align}
+		\label{eq:chain-communities}
+		\Set{0,1,2,3},
+		\Set{0,1,2},
+		\Set{1,2,3}, %\text{and}
+		\Set{1,2}.
+	\end{align}
+%
+	For $\beta = 0$, Fig.~\ref{fig:eg-chain-beta0}
+	shows the plots (against $`a$) of the functions $\hat{f}(`a)$ (blue), $\hat{f}_{t}(`a)$
+	(solid), and
+	$f_{\alpha}(C)$ (dashed black).%
+	\footnote{
+	The figure shows $f_{\alpha}(C)$ only for the relevant
+	subsets $C\subseteq V$ achieving \eqref{eq:g-candidate}, i.e., the candidates. In
+	other words, all suppressed lines lie above the curve of $\hat{f}_{t}$ for all $t\in V$.
+	}
+	For $\beta = 1$, the same functions are shown in Fig.~\ref{fig:eg-chain-beta1}.
+	%
+	The candidates are determined by the solid lines,
+	e.g., for $\beta = 0$, we have $C_{\alpha,t}$ as
+%	e.g., when $\beta = 0$,
+%	for $\alpha \geq 2$ all the candidates are singletons,
+%	for $\alpha\in [1.5,2)$ the candidates of $0$ and $3$ are singletons and the candidates of
+%		$1$ and $2$ are respectively $\Set{0,1}$ and $\Set{2,3}$, etc.
+	\begin{align}
+		\label{eq:eg-chain-candidates}
+%		C_{\alpha, t} = \!\!\!
+		\begin{array}{ccccl}
+			%C_{\alpha, 0,0} & C_{\alpha, 0,1} & C_{\alpha,0,2} & C_{\alpha,0,3} &
+			 t=0 & t=1 & t=2 & t=3 &
+			\\
+			 \Set{0} & \Set{1} & \Set{2} & \Set{3}, & `a \geq  2 \\
+			 \Set{0} & \Set{0,1} & \Set{2,3} & \Set{3}, &  \alpha \in  [1.5,2) \\
+			 \Set{0} & V & V & \Set{3}, &  \alpha \in  [\frac{2}{3},1.5) \\
+			 V & V & V & V, &  \alpha < 2/3 \ . \\
+					%\emptyset, & `a \geq  2/3 
+					%\\
+					%\Set{0,1,2,3}, & `a < 2/3
+		\end{array}
+	\end{align}
+	%
+	Note that each entry in \eqref{eq:eg-chain-candidates} is the inclusion-wise minimum solution to
+	\eqref{eq:submodular}. 
+	Propositions~\ref{prop:communities-from-candidates} asserts that, for a given $\beta$, the set of
+	communities is specified by the blue line as 
+	\begin{align}
+		\label{eq:eg-chain}
+		\begin{array}{c@{\quad}c}
+			 %(`a,0)\text{-communities} & (`a,1)\text{-communities} \\[\smallskipamount]
+			 \beta = 0 & \beta = 1 \\%[\smallskipamount]
+			\!\!
+			\!\!
+			\left\{
+				\!\!\!
+				\begin{array}{l@{\ }l}
+					\emptyset, & `a \geq  2/3 
+					\\
+					\Set{0,1,2,3}, & `a < 2/3
+				\end{array}\!\!,
+			\right.
+			&
+			\left\{
+				\!\!\!
+				\begin{array}{l@{\ }l}
+					\emptyset, & `a \geq 6
+					\\
+					\Set{1,2}, & `a \in  [4, 6)
+					\\
+					\Set{0,1,2,3}, & `a < 4
+				\end{array}\!\!.
+			\right.
+		\end{array}
+	\end{align}
+	All the communities at $\beta = 0$ (trivial in this example) are web-communities as
+	dictated by Corollary~\ref{cor:alpha-beta-supporting}.
+	Note also that
+	the web-community $\Set{1,2}$ is captured at $`b = 1$ but not $\beta=0$, i.e., when the cost
+	function \eqref{eq:fb} rewards the internal influence.%
+%	\footnote{A community at $\beta > 0$ is not necessarily a webcommunity in general, although it
+%		happened to be the case in this simple example. See Corollary~\ref{cor:alpha-beta-supporting}
+%		for the exact condition.}
+	This situation may persist in general, and shows the benefit of choosing $\beta > 0$.  Namely, if
+	there is a dense subgraph that is moderately connected with the rest of the graph, then it is
+	reasonable to favor such a subgraph over a sparse one, even if the sparse subgraph exhibits
+	weaker connection to the rest of the graph. 
+	%since a dense subgraph may exhibit strong
+	%external connections with the rest of the graph compared to the external connections of a
+	%sparser subgraph. In this situation, it is intuitive to regard the dense subgraph, rather than
+	%the sparse one, as a community as long as the external connections of this dense subgraph are
+	%weak compared to its internal ones.
+\end{example}
+In the above example, the non-trivial community at $\beta =1$ is a web-community, which is
+desirable. However, for the same reason mentioned in the example, a community at $\beta > 0$ may
+still be desirable even if it is not a web-community. For instance, consider the graph in
+Fig.~\ref{fig:eg-star}. The set $\Set{0,1}$ is not a web-community since node~$1$ is more
+connected with the rest of the graph than it is with node~$0$. Despite this, it is still desirable
+to consider this set as a community since it is the desnsest $2$-subgraph. This set is indeed a
+community according to our fomrulation and can be returned at $\beta=1$ and $\alpha\in [2,6)$. 
+%See Corollary~\ref{cor:alpha-beta-supporting}
+
+%%%%%%%%%%%
+
+%%%%%%%%%%% fig: plots of f_beta, g_t, and g for chain graph
+\begin{figure}
+	\centering
+	%%%%%%%%%%%%%%%
+	\center
+	\def\figsep{.1cm}
+	\def\dist{1}
+	\def\disty{.5}
+	%%%%%%%%%%%%%%%
+	\subcaptionbox{$`b = 0$ \label{fig:eg-chain-beta0}}{
+	\scalebox{0.69}{
+		{\def\u{1.3}
+			\tikzstyle{point}=[draw,circle,minimum size=.2em,inner sep=0, outer sep=.2em]
+			\begin{tikzpicture}[scale=1, x=1.4em,y=1.4em,>=latex]
+			\draw[->] (0,-.5*\u) -- (0,8*\u) node [] {};
+			\draw[->] (-.5*\u,0) -- (4*\u,0) node [label=right:$`a$] {};
+			%ticks
+			\foreach \x in {0,...,3}
+				\draw (\x*\u,1pt) -- (\x*\u,-3pt);
+			\foreach \y in {0,...,7}
+				\draw (1pt,\y*\u) -- (-3pt,\y*\u);
+			\foreach \xa/\ya/\xb/\yb/\lp/\lb in {
+				0/5/3/8/left/{$\kern1em \begin{array}{c} \Set{1} \\ \Set{2} \end{array} \!\!\!, \ `a+5$},
+				%0/5/3/8/left/{$\kern1em \Set{1},\Set{2}, `a+5$},
+				0/3/2.5/8/left/{$\kern1em \begin{array}{c} \Set{0,1} \\ \Set{2,3} \end{array} \!\!\!, \ 2`a+3$},
+				%0/3/2.5/8/left/{$\kern1em \Set{0,1},\Set{2,3}, 2`a+3$},
+				0/2/3/5/left/{$\kern1em \begin{array}{c} \Set{0} \\ \Set{3} \end{array} \!\!\!,  `a+2$},
+				%0/2/3/5/left/{$\kern1em \Set{0},\Set{3}, `a+2$},
+				0/0/2/8/above left/{$\kern1em \Set{0,1,2,3}, 4`a$}
+			}
+			\draw[dashed] (\xa*\u,\ya*\u) node [inner sep=0,outer sep=0,label={[label distance=0em]\lp:{\scriptsize\lb}}] {} -- (\xb*\u,\yb*\u);
+			\path (2/3*\u,8/3*\u) node (c1) [point,red,thick,label=right:{\scriptsize$(2/3,8/3)$}] {};
+			\path (1.5*\u,6*\u) node (c2) [point,black,thick,label=right:{\scriptsize$(1.5,6)$}] {};
+			\path (2*\u,7*\u) node (c3) [point,black,thick,label=right:{\scriptsize$(2,7)$}] {};
+			\draw[-,thick,black] (0,0)--(c1)--(c2)--(c3)--(3*\u,8*\u);
+			\draw[-,thick,blue] (0,0)--(c1)--(3*\u,5*\u);
+			%
+			%\draw[-,thick,blue] (0,0)--(c2)--(c3)--(3*\u,8*\u);
+			\path (c3) ++(25:3) node (g1) [] {$\hat{f}_1, \hat{f}_{2}$};
+			\path (c1) ++(25:3.5) node (g0) [] {$\hat{f}, \hat{f}_0, \hat{f}_{3}$};
+			\end{tikzpicture}}
+	}
+	}
+	%\hfil
+	\hspace{-.2cm}
+	\subcaptionbox{$`b = 1$ \label{fig:eg-chain-beta1}}{
+	\scalebox{0.69}{
+		{\def\u{.52}
+			\tikzstyle{point}=[draw,circle,minimum size=.2em,inner sep=0, outer sep=.2em]
+			\begin{tikzpicture}[scale=1, x=1.4em,y=1.4em,>=latex]
+			%\draw[help lines, color=gray!30, dashed] (-.5*\u,-7.5*\u) grid (4*\u,4*\u);
+			\draw[->] (0,-14.5*\u) -- (0,7*\u) node [] {};
+			\draw[->] (-.5*\u,0) -- (7*\u,0) node [label=right:$`a$] {};
+			%%%ticks
+			\foreach \x in {0,...,6}
+				\draw (\x*\u,1pt) -- (\x*\u,-2pt);
+			\foreach \y in {-14,...,6}
+				\draw (1pt,\y*\u) -- (-2pt,\y*\u);
+			%%%%%%
+			\foreach \xa/\ya/\xb/\yb/\lp/\lb in {
+				0/0/7/7/left/{$\kern1em \begin{array}{c} \Set{0} \\ \Set{1} \\ \Set{2} \\ \Set{3} \end{array} \!\!\!, \ `a$},
+				0/-6/{13/2}/7/left/{$\kern1em \Set{1,2}, 2`a-6$},
+				0/-10/{17/3}/7/left/{$\kern1em \begin{array}{c} \Set{0,1,2} \\ \Set{1,2,3} \end{array} \!\!\!, \ 3`a-10$},
+				0/-14/{21/4}/7/left/{$\kern1em \Set{0,1,2,3}, 4`a-14$}
+			}
+			\draw[dashed] (\xa*\u,\ya*\u) node [inner sep=0,outer sep=0,label={[label distance=0em]\lp:{\scriptsize\lb}}] {} -- (\xb*\u,\yb*\u);
+			\path (4*\u,2*\u) node (c1) [point,red,thick,label=right:{\scriptsize$(4,2)$}] {};
+			\path (5*\u,5*\u) node (c2) [point,black,thick,label=right:{\scriptsize$(5,5)$}] {};
+			\path (6*\u,6*\u) node (c3) [point,red,thick,label=right:{\scriptsize$(6,6)$}] {};
+			\draw[-,thick,black] (0,-14*\u)--(c1)--(c2)--(c3)--(7*\u,7*\u);
+			\draw[-,thick,blue] (0,-14*\u)--(c1)--(c3)--(7*\u,7*\u);
+			%%
+			\path(c1) ++(-83:4) node(g1){$\hat{f}, \hat{f}_1, \hat{f}_2$};
+			\path(c2) ++(160:1.2) node(g0){$\hat{f}_0, \hat{f}_3$};
+			\end{tikzpicture}}
+	}
+	}
+	\caption{The plots of $\hat{f}_t(`a)$ (solid) against $`a$ for the undirected graph in
+	Fig.~\ref{fig:eg-chain}. The optimal $\hat{f}_t(`a)$ define $\hat{f}(`a)$ (solid blue).
+	%, i.e., $T^{*}_{\alpha,0} = \Set{0,3}$ and $T^{*}_{\alpha,1} = \Set{1,2}$.
+	%for Example~\ref{eg:chain}
+	}
+	\label{fig:P}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%% end: candidates definition, relation to communities, and example
+
+\subsection{Using maxflow algorithm}
+
+Since $f(C)$ is a submodular function, the minimization problem \eqref{eq:alpha-beta-community} can be solved using any submodular function
+minimization (SFM) algorithm. However, a generic SFM algorithm is computationally expensive. Below we reduce the problem of finding the $(\alpha,\beta)$-candidate of any $t\in V$ to the  
+mincut problem of the following augmented graph.
+\begin{definition}
+	\label{def:augmented}
+	%Let $(V, A)$ be a digraph and let $d_i:= w(V\backslash \{i\},i)$ be the in-degree of node $i$ for any $i\in V$.
+	Let $\alpha, \beta$, and $t$ be as in Definition~\ref{def:alpha-beta} and let $s \notin V$ be
+	some additional node.
+	%Furthermore, for any $i \in V$, let $d_i:= w(V\backslash \{i\},i)$ be the in-degree of node $i$.
+	The
+	$(\alpha,\beta,t)$-augmented digraph is the digraph on $V \cup \{s\}$  whose edge weight $w_{\alpha,\beta,t}: (V\cup \{s\})^{2} \rightarrow
+	\mathbb{R}_{\geq 0}$ is defined as
+	\begin{align}
+		w_{`a`b t}(i,j):= \left\{
+			\begin{array}{ll}
+				w(i,j), & i\in V, j\in V\backslash \{t\} \\
+				w(i,j) + \beta d_{i}, & i\in V, j = t  \\
+				\alpha, & i = s, j \in V \\
+				0, & \text{otherwise}.
+			\end{array}
+			\right .
+	\end{align}
+\end{definition}
+
+\begin{theorem}
+  \label{thm:mc}
+	The candidate $C_{`a,t}$ is the unique inclusion-wise minimum set $C$ such that $(\{s\}\cup
+	V\backslash C, C)$ is an $s$--$t$ mincut of the $(\alpha,\beta,t)$-augmented digraph.
+\end{theorem}
+
+\begin{Proof}[Sketch]
+  The theorem follows by showing that for any $C\subseteq V:t\in C$, the incut function of the
+  augmented graph evaluated at $C$ is equal to
+  $f(C) + \alpha \! \cdot \! |C|$ plus some constant independent of $C$, i.e., \eqref{eq:alpha-beta-community} is
+  equivalent to the $s$--$t$ mincut
+  problem on the augmented graph.
+\end{Proof}
+
+% Due to this theorem, in the subsequent discussions, we will interchangeably refer to the
+% $(\alpha,\beta)$-community of $t$ as the
+% minimum minimizer of \eqref{eq:alpha-beta-community} or the minimum $s$--$t$ mincut of the augmented
+% digraph.
+
+For a given $`a$ and $`b$, the set $\mcC$ of communities can be computed as follows:
+\begin{enumerate}
+\item Run the maxflow algorithm $n$ times, one for each $t\in V$ on the $(`a,`b,t)$-augmented graph to obtain $\hat{f}_t(`a)$ and its unique minimum solution $C_{`a,t}$.
+\item Compute $\hat{f}(`a)$ as the minimum $\hat{f}_t(`a)$ over $t\in V$, and retain only the associated non-singleton $C_{`a, t}$ for $\mcS_{`a}$. 
+\end{enumerate}
+The second step can run in linear time and so the first step gives the overall complexity.
+
+We can use the parametric maxflow algorithm of~\cite{gallo89} to compute $\hat{f}_t(`a)$ for all $`a\geq 0$. The running time of the parametric algorithm is indeed the same as that of the push-relabel maxflow algorithm. Hence, we only need $n$ maxflow algorithms on the augmented graphs to obtain $\hat{f}_t(`a)$ and $C_{`a,t}$ for all $`a\geq 0$ and $t\in V$. We can then compute $\hat{f}(`a)$ as the minimum $\hat{f}_t(`a)$ over $t\in V$, and retain the associated non-singleton $C_{`a,t}$ for $\mcS_{`a}$. This step can be computed in $O(n^2)$ because there are at most $n$ line segments for each $\hat{f}_t(`a)$ and $\hat{f}(`a)$. 
+

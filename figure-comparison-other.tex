@@ -1,0 +1,141 @@
+\vfill
+
+\tikzstyle{cluster}=[fill opacity=0.2,rounded corners,inner sep=0.1em]
+
+
+
+\begin{figure}[h!]
+  \centering
+  \tikzstyle{nodestyle}=[inner sep=0.2em,outer sep=0em]
+  \tikzstyle{every to}=[every node/.style={font=\scriptsize}]
+  \begin{subfigure}[b]{.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \matrix (DSP) [matrix of math nodes,column sep=1.2em, row sep=1em, nodes={nodestyle}]
+      {
+	|(0)| 0 & |(1)| 1 & |(2)| 2 & |(3)| 3 & |(4)| 4 \\
+      };
+      \draw (0) to node [above] {1} (1) (2) to node [above] {2} (3) to node [above] {1} (4);
+      \node[cluster,fill=blue,fit=(0) (1)] {};
+      \node[cluster,draw=red,fit=(2) (3)] {};
+    \end{tikzpicture}
+    \caption{Densest subgraphs: The set $\{0,1\}$ is a web-community that is not a densest $2$-subgraph since $\{2,3\}$ has strictly more internal support.}
+    \label{fig:DSP}    
+  \end{subfigure}
+  %%%%%%%%%%%%%%%
+  \hfill
+  %%%%%%%%%%%%%%%
+  \begin{subfigure}[b]{0.45\textwidth}
+    % for drawing ring of clique
+    % https://tex.stackexchange.com/questions/223854/drawing-a-ring-of-cliques-in-tikz-graphs/223902#223902
+    \newcommand\single[2]{ % #1=labels, #2= n=number of nodes
+      \foreach \x in {1,...,#2}{
+        \pgfmathsetmacro{\ang}{360/#2}
+        \pgfmathparse{(\x-1)*\ang}
+        \node[draw,fill=red,circle,inner sep=1pt] (#1-\x) at (\pgfmathresult:4cm) {};
+      }
+      \foreach \x [count=\xi from 1] in {1,...,#2}{
+        \foreach \y in {\x,...,#2}{
+          \path (#1-\xi) edge[-] (#1-\y);
+        }
+      }
+    }
+    \centering
+    \begin{tikzpicture}
+    \begin{scope}[local bounding box=scope1]
+    %\node at (0,0){$n=5, m=30$};
+    \node at (0,0){$30$ cliques};
+    \end{scope}
+    \foreach \s[count=\si from 0] in {0,45,90,...,360}{
+    \begin{scope}[shift={($(scope1) +(\s:2)$)}, scale=0.1,rotate=\s+90]
+    \single{\si}{5};
+    \end{scope}
+    }
+    \foreach \i/\j in {1/2,2/3,3/4,4/5,5/6,6/7,7/8}
+    \draw (\i-1)--(\j-3);
+    %\draw[dotted,thick, outer sep=10pt] (8-1)--(1-3);
+	 \def\dd{.13cm}
+    \draw[dotted,thick, outer sep=10pt] ([xshift=-\dd, yshift=\dd]8-1.north)--([xshift=\dd, yshift=-\dd]1-3.south);
+    \end{tikzpicture}
+	 %
+	 \hfill
+    \begin{tikzpicture}
+      \matrix (DSP) [matrix of math nodes,column sep=1.9em, row sep=2em, nodes={nodestyle}]
+      {
+		|(0)| 0 \\ |(1)| 1 \\ |(2)| 2 \\ |(3)| 3 \\
+      };
+		\draw (0) to node [left] {1} (1) (1) to node [left, rotate=0] {$0.6$} (2) to node [left] {1} (3);
+      \node[cluster,inner sep=.3em,fill=blue,fit=(0) (1)] {};
+      \node[cluster,inner sep=.3em,fill=blue,fit=(2) (3)] {};
+      \node[cluster,inner sep=.9em, draw=red,fit=(0) (3)] {};
+    \end{tikzpicture}
+    \caption{Modularity: Two graphs showing modularity's bias towards solutions of larger size.}
+    \label{fig:modularity_2}
+  \end{subfigure}
+  %%%%%%%%%%%%%%%
+  \hfill
+  %%%%%%%%%%%%%%%
+  \begin{subfigure}[b]{.45\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \matrix (con) [matrix of math nodes,column sep=1.2em, row sep=1em, nodes={nodestyle}]
+      {
+		|(0)| 0 & |(1)| 1 & |(2)| 2 & |(3)| 3 & |(4)| 4 & |(5)| 5 & |(6)| 6 & |(7)| 7 & |(8)| 8 & |(9)| 9\\
+      };
+      \draw (0) to node [above] {2} (1) to node [above] {0.6} (2) to node [above] {1} (3) to node [above] {1} (4) to node [above] {1} (5) to node [above] {1} (6) to node [above] {1} (7) to node [above] {1} (8) to node [above] {1} (9);
+      \node[cluster,fill=blue,fit=(0) (1)] {};
+      \node[cluster,draw=red,fit=(0) (1) (2) (3) (4),inner sep=0.4em] {};
+      %\node[cluster,draw=red,fit=(5) (6) (7) (8) (9),inner sep=0.4em] {};
+    \end{tikzpicture}
+    \caption{Minimum conductance: The sets $\{0,1,2,3,4\}$ and $\{5,6,7,8,9\}$ minimize the conductance to $\frac19$. In contrast,
+our approach can return the desired cluster
+$\{0,1\}$.}
+    \label{fig:conductance}    
+  \end{subfigure}
+  %%%%%%%%%%%%%%%
+  \hfill
+  %%%%%%%%%%%%%%%
+  \begin{minipage}[b]{0.45\textwidth}
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \matrix (con) [matrix of math nodes,column sep=1.2em, row sep=1em, nodes={nodestyle}]
+      {
+		|(0)| 0 & |(1)| 1 & |(2)| 2 & |(3)| 3 & |(4)| 4 & |(5)| 5 & |(6)| 6 & |(7)| 7 & |(8)| 8 & |(9)| 9\\
+      };
+      \draw (0) to node [above] {2} (1) to node [above] {0.6} (2) to node [above] {1} (3) to node [above] {1} (4) to node [above] {1} (5) to node [right] {1} (6) to node [above] {1} (7) to node [above] {1} (8) to node [above] {1} (9);
+      \node[cluster,fill=blue,fit=(2) (3) (4) (5) (6) (7) (8) (9)] {};
+      \node[cluster,draw=red,fit=(2) (3) (4) (5),inner sep=0.4em] {};
+      \node[cluster,draw=red,fit=(6) (7) (8) (9),inner sep=0.4em] {};
+      %\node[cluster,draw=red,fit=(5) (6) (7) (8) (9),inner sep=0.4em] {};
+    \end{tikzpicture}
+    \caption{Infomap: The sets $\{0,1\}$, $\{2,3,4,5\}$ and $\{6,7,8,9\}$ optimize the map equation~\cite{rosvall2008maps}. In contrast,
+our approach can return the desired cluster $\{2,3,4,5,6,7,8,9\}$.}
+    \label{fig:infomap}    
+  \end{subfigure}\\
+  \begin{subfigure}[b]{\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \matrix (con) [matrix of math nodes,column sep=1.2em, row sep=1em, nodes={nodestyle}]
+      {
+	|(0)| 0 & |(1)| 1 & |(2)| 2 & |(3)| 3 & |(4)| 4 & |(5)| 5\\
+      };
+      \draw (0) to node [above] {1} (1) to node [above] {2} (2) to node [above] {1} (3) to node [above] {0.5} (4) to node [above] {1} (5);
+      % \node[cluster,fill=blue,fit=(0) (1)] {};
+      \node[cluster,draw=red,fit=(0) (1) (2) (3),inner sep=0.4em] {};
+      \node[cluster,draw=red,fit=(4) (5),inner sep=0.4em] {};
+      %\node[cluster,draw=red,fit=(5) (6) (7) (8) (9),inner sep=0.4em] {};
+    \end{tikzpicture}
+    \caption{Infomap: will return \{\{0, 1, 2, 3\},\{4, 5\}\} but not the stronger community
+	 $\{1,2\}$. In contrast, our formulation returns all of them parameterized by their strengths.}
+    \label{fig:infomap2}
+  \end{subfigure}
+\end{minipage}
+  %%%%%%%%%%%%%%%
+  \hfill
+  %%%%%%%%%%%%%%%
+  \vspace{-.5em}
+  \caption{Examples of weighted graphs where our formulation (highlighted in blue) can return more meaningful communities
+  than existing methods (circulated in red). (Not all communities are highlighted / listed.)}
+  \label{fig:eg_for_graphs}
+\end{figure}

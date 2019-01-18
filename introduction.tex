@@ -1,0 +1,62 @@
+
+\section{Introduction}
+\label{sec:introduction}
+
+%In this work, we consider the problem of graph clustering where communities of highly related nodes
+%are identified based on their interconnections. This has significant applications in studying social
+%and biological systems where related entities often interact more with each other and therefore form
+%dense subgraphs where an edge represent an interaction. Although the notion of community is
+%intuitive, the challenge, however, is to find a precise mathematical definition that efficiently
+%identifies the communities of interest.
+
+In this work, we consider the problem of graph clustering, see e.g., \cite{fortunato2016community}, where communities of highly related nodes
+are identified based on their interconnections. This has significant applications in studying social
+and biological systems where related entities tend to interact more with each other compared to
+unrelated ones.
+%As a result, with edges representing interactions, a community appear as a dense subgraph whose
+%members share more connections 
+%and therefore form
+%dense subgraphs where an edge represent an interaction.
+Although the notion of community is
+intuitive, the challenge, however, is to find a precise mathematical definition that efficiently
+identifies the communities of interest.
+
+The most widely accepted definition of a community, or graph cluster, is perhaps that of
+\cite{flake:efficient,radicchi:defining,newman2004fast}. Roughly speaking, a community
+is a group of nodes  that share
+stronger connections among themselves compared with the rest of the graph. Such a definition naturally inspires
+ graph cut \cite{flake:cut-clustering,shi2000normalized},
+modularity \cite{newman2004fast,blondel2008fast}, random walk \cite{rosvall2008maps} based
+methods, to name a few, for identifying communities. These methods have to refine the original
+definition of a community for efficient computation and storage. In particular, web communities
+defined in \cite{flake:efficient,flake:cut-clustering} are NP-hard to compute, and so a
+cut-clustering algorithm was proposed in \cite{flake:cut-clustering} that finds approximate web
+communities by minimizing a weighted sum of the external connections and the size of the community.
+It was shown that the computation reduces to finding the mincuts of some modified graphs,  and the
+set of all such communities, or cut clusters, form a hierarchy, which can be represented efficiently
+by a dendrogram.
+
+%However, the hierarchical structure of cut-clusters rely on the graph being undirected. Furthermore,
+%we find that cut-clustering often fails to return dense subgraphs but instead returns the less
+%interconnected peripherals of the dense subgraphs. This behaviour is not surprising since, for a given
+%size, a set of nodes having fewer external connections does not necessarily imply they have more
+%internal connections. In other words, a dense subgraph may have many external connections in the
+%original graph, while a sparse subgraph can have very few external connections in the orignal graph.
+%In this work, we primarily focus on improving the cut-clustering algorithm. Our proposed solution
+%not only resolves the problem with no additional cost in computation and storage, but can also be
+%generalized to cluster digraphs or more general non-graphical networks with a submodular cost
+%function. 
+However, the hierarchical structure of cut-clusters rely on the graph being undirected. Furthermore,
+we find that cut-clustering often fails to return dense subgraphs but instead returns the less
+interconnected peripherals of the dense subgraphs. This behaviour is not surprising since, for a given
+size, a set of nodes having fewer external connections does not necessarily imply they have more
+internal connections. In other words, a dense subgraph may have many external connections
+with the rest of the graph compared with the external connections of a sparser subgraph.
+%Nevertheless, it is intuitive in the
+%original graph, while a sparse subgraph can have very few external connections in the orignal graph.
+In this work, we primarily focus on improving the cut-clustering algorithm. Our proposed solution
+not only resolves the problem with no additional cost in computation and storage, but can also be
+generalized to cluster digraphs or more general non-graphical networks with a submodular cost
+function. 
+
+This paper is organized as follows. In Section~\ref{sec:preliminaries}, we introduce the notion of web communities for digraphs and the approximate solution by cut-clustering for undirected graphs. In Section~\ref{sec:problem}, we improve the formulation of cut-clustering and extend it to digraphs. In  Section~\ref{sec:hierarchy} and \ref{sec:computation}, we explain the hierarchical structure of the communities and its polynomial-time computation. In Section~\ref{sec:experiment}, we give test results on some web graphs that show the proposed algorithm can return the web centers successfully while cut-clustering may not. In the appendices, we give detailed comparisons with cut-clustering and other algorithms in Appendix~\ref{sec:comparison-cut} and \ref{sec:comparison-other} along with experiments on both synthetic and real-world data sets. The proofs and detailed calculations of some of the examples are given in Appendix~\ref{sec:proofs} and \ref{sec:calculations}.

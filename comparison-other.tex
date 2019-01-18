@@ -1,0 +1,103 @@
+\section{comparison with other formulations}
+\label{sec:comparison-other}
+
+In this section we compare our formulation to some existing ones. To simplify the discussions, we
+rely on simple examples to demonstrate some of the common issues that arise in graph clustering, and
+to point out similarities / differences between our method and some existing ones. We also present
+some experimental results on a synthetic and a real-world data sets to verify that our observatoins
+extend beyond demonstrating examples.
+
+%\textcolor{magenta}{aaa---this section is still under construction. in the short paper, the section will be replaced by
+%a paragraph in the previous section or a pointer.}
+%most relevant works are that of Flake et al. \cite{flake:cut-clustering} and
+%that of Nagano et al. \cite{nagano2011size}.  We also point out some issues
+%that are known to be  problematic for some common clustering techniques, such
+%as modularity \cite{newman2006modularity}, Infomap \cite{rosvall2009map}, and
+%conductance \cite{add} minimization, but are circumvented in the current
+%formulation.
+
+
+% k-densest sub-graph
+The work of \cite{nagano2011size} uses the idea of principle
+sequence~\cite{fujishige80,fujishige05,fujishige-pp-revisited} to give a polynomial-time partial
+solution to the NP-hard size-constrained submodular function minimization problem. When applied to
+graphical networks, the problem reduces to the densest $k$-subgraph problem, and the proposed
+solution can be used to identify a portions of the densest $k$-subgraphs.
+%Same as the minimum
+%average cost clustering, the method in full generality does not have a precise interpretation in
+%specific domains. It is different from our framework, as results in \figref{fig:cnr-2000} show that
+%our approach can identify strictly more densest subgraphs.
+%
+%The work in \cite{nagano2011size} considered the size-constrained minimization problem of a
+%submodular function.  To make the comparison more concrete (and brief), we focus on the densest
+%subgraph problem. The problem is hard in general, however, as shown in \cite{nagano2011size}, 
+%it can be partially solved (i.e., for a subset of sizes) using the same formulation
+%\eqref{eq:fhat}--\eqref{eq:fb}
+In this case the formulation  in \cite{nagano2011size} is similar to 
+\eqref{eq:alpha-beta-community} 
+with $\beta = 1$ and the constraint $|C| \geq 1$
+absent from \eqref{eq:fhat}, i.e., we exclude the empty
+set and \cite{nagano2011size} does not.
+%. The difference between the
+%\eqref{eq:fab}, i.e., it did not exclude the empty set.
+It can be shown that this exclusion allows our formulation to fined more solutions to the densest
+$k$-subgraph problem. For instance, 
+in the graph in Fig.~\ref{fig:eg-chain}, the densest $2$-subgraph is $\Set{1,2}$, which can be
+obtained using our algorithm with $\beta = 1$ and $\alpha \in [4,6)$, see
+Example~\ref{eg:chain-community}, but cannot be obtained using the formulation in
+\cite{nagano2011size} since the empty set achieves a minimum cost of zero over that range of
+$\alpha$.
+For the same reason the formulation in \cite{nagano2011size} cannot find any communities when
+$f$ is chosen to be the in-cut function, i.e., $\beta = 0$, since the empty set is trivially the
+optimal solution with zero size and zero in-cut.
+
+%%%%%%%%%%%%%% figure: cnr2000
+\input{figure-cnr2000.tex}
+%%%%%%%%%%%%%% figure: cnr2000
+The observation above extends to larger graphs, which is demonstrated in Fig.~\ref{fig:cnr-2000}.
+In this experiment, we applied our algorithm with $\beta = 1$ to the social-network data set
+\emph{cnr-2000}, which is a directed unweighted graph. We preprocessed the network in the same way
+as \cite{nagano2011size}.
+By comparing the result of our algorithm to their proposed SSM algorithm, we are able to retrieve
+$51$ dense communities with cardinality larger than $2000$, while \cite{nagano2011size} reported that their SSM algorithm can only find
+two such communities.
+
+We remark that a web-community is not necessarily a densest subgraph.\footnote{Not to be confused
+	with our discussion in an earlier section where we remarked that a densest subgraph is not necessarily a web-community, e.g., see
+	Fig.~\ref{fig:eg-star}.} 
+For instance, consider the graph in Fig.~\ref{fig:DSP}.  The set $\{0,1\}$ is a web-community
+that is returned by our method, but it is not a densest $2$-subgraph since the subgraph $\{2,3\}$
+has strictly more internal support.  Hence, any graph clustering algorithm that only returns densest
+subgraphs will fail to return such a web-community.
+
+
+The modularity \cite{newman2006modularity}, Infomap \cite{rosvall2009map}, and conductance
+minimization \cite{shi2000normalized} formulations lead to NP-hard problems, and so rely on
+approximations.
+Modularity optimization, despite its popularity, has some limitations as pointed out in
+\cite{add}. One limitation is the resolution limit where the modularity score is tends to favour larger
+communities. 
+For instance, for the graph in Fig.~\ref{fig:modularity_2} (right), the  modularity score is
+minimized by the entire set, and so it fails to detect the more meaningful communities $\Set{0,1}$
+and $\Set{2,3}$, which can be identified using our formulation.
+Another example is  the ring of cliques \cite{add} shown in \ref{fig:modularity_2} (left) for 
+$30$ cliques each of size $5$. In this case, the modularity method
+groups two consecutive cliques as one cluster, while our formulation can identify every clique.
+
+Methods that are based on conductance minimization may also suffer since they tend to favour solutions of
+relatively equal size.\footnote{While this is desirable in some applications, it can also lead to some
+undesirable solutions.} An example graph demonstrating this is shown in Fig.~\ref{fig:conductance}.
+A similiar issue is faced by Infomap as shown in Figs.~\ref{fig:infomap} and \ref{fig:infomap2}.
+
+
+Fig. \ref{fig:LFR} shows that many existing methods fail to find strong communities of large sizes
+as returned by our proposed methods. The result uses a synthetic graphical network randomly
+generated using an existing method. However, this generation targets partitional clustering methods,
+and so we expect even more discrepancies when testing on real-world networks that are hierarchical
+in nature. It is also an interesting but challenging problem to generate synethetic networks to test
+hierarchical clustering methods.
+
+
+
+\input{figure-comparison-other.tex}
+\input{figure-strength-lfr.tex}

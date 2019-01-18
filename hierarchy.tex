@@ -1,0 +1,81 @@
+
+\section{Community hierarchy}
+\label{sec:hierarchy}
+
+The following result shows that, similar to hierarchical clustering methods, the set of communities
+forms a hierarchy and so can be represented by a dendrogram in linear storage.
+
+\begin{theorem}
+  \label{thm:hierarchy}
+  For $`a_1\geq `a_2\geq 0$ and $C_i\in \mcS_{`a_i}$ for $i=1,2$, we have $C_1\subseteq C_2$ or
+  $C_1\cap C_2=`0$. Furthermore, $C_1\subsetneq C_2$ implies $`a_1>`a_2$. Hence, the set $\mcC$ of communities can be represented by a dendrogram with $`s$ measuring the cophenetic similarity of the dendrogram.
+\end{theorem}
+
+The hierarchical structure can be observed from Example~\ref{eg:mcC}, where matched pairs $C_i$'s
+are disjoint communities with the same strength $`s(C_i)=1$. Since the trivial community $V$
+contains a matched pair, it has a strictly smaller strength $`s(V)=0$ as expected.
+We remark that the proof of the theorem relies only on the submodularity~\eqref{eq:submodular} of
+$f_{\beta}$, and so the theorem extends to submodular functions that are not necessarily defined in
+terms of graph cut. 
+
+To understand the parameter $`a$ as a measure of similarity, we will strengthen
+Proposition~\ref{pro:single-deviation} to give a more precise interpretation of $`a$ as a bound
+on the marginal change in the cost of a community.
+\begin{theorem}
+  \label{thm:f-shrink-expand}
+  Each $C\in \mcS_{`a}$ satisfies%\footnote{The converse of the theorem is not true. For instance, recall in Example~\ref{eg:two-chains} that $\Set{2,3}$ is not an $(`a,`b)$-community for $`a=1.7$ and $`b=1$. However, it can be shown that $\Set{2,3}$ satisfies \eqref{eq:f-shrink} and \eqref{eq:f-expand}.}
+  \begin{subequations}
+    \label{eq:f-shrink-expand}
+    \begin{align}
+      \label{eq:f-shrink}
+      \alpha &< \min_{B\subsetneq C:|B|\geq 1} \frac{f(B) - f(C)}{|C`/ B|}, \\
+      \label{eq:f-expand}
+      \alpha &\geq \max_{A\subseteq V:A\supsetneq C} \frac{f(C) - f(A)}{|A`/ C|}. 
+    \end{align}
+  \end{subequations}
+  (By convention, we set the r.h.s. of \eqref{eq:f-expand} to $-\infty$ if $C=V$.)
+\end{theorem}
+
+In other words, $`a$ is both a lower bound~\eqref{eq:f-shrink} of the marginal increase in the cost
+$f$ when the community shrinks, and an upper bound~\eqref{eq:f-expand} of the marginal decrease in
+the cost $f$ when the community expands. The above theorem can be viewed as a generalization of
+Proposition~\ref{pro:single-deviation} because \eqref{eq:single-shrink} and \eqref{eq:single-expand}
+are the special cases when we further impose $B=C`/\Set{i}$ for $i\in C$ in \eqref{eq:f-shrink}, and
+$A=C\cup \Set{i}$ for $i\in V`/C$ in \eqref{eq:f-expand} respectively. As the following corollary
+shows, the result also ties back to the notion of graph expansion used to measure cluster quality.
+
+\begin{corollary}
+  Each $C\in \mcS_{`a}$ satisfies for $`b=0$
+  \begin{subequations}
+    \begin{align}
+      \label{eq:bound-beta0}
+      \frac{w(V\backslash C, C)}{|V\backslash C|} 
+      &
+        \stackrel{ \rm{(i)} }{\leq}
+        \alpha
+        \stackrel{ \rm{(ii)} }{<}
+        \min_{B\subsetneq C: |B| \geq 1} \frac{w(C\backslash B, B)}{|C\backslash B|} 
+    \end{align}
+    and, for $`b=1$,
+    \begin{align}
+      % 
+      \label{eq:bound-beta1}
+      \max_{A\subseteq V: A\supsetneq C} \frac{w(A,A)-w(C,C)}{|A\backslash C|}  
+      &
+        \stackrel{ \rm{(iii)} }{\leq}
+        \alpha
+        \stackrel{ \rm{(iv)} }{<}
+        \frac{w(C, C)}{|C|-1}. 
+    \end{align}
+  \end{subequations}
+  ~\relax
+\end{corollary}
+\begin{Proof}
+  (ii) and (iii) follow from \eqref{eq:f-shrink} and \eqref{eq:f-expand} with $\beta=0$ and $1$,
+  respectively. (i) and (iv) follow from \eqref{eq:f-shrink-expand} by choosing
+	$C' = V$ 
+	and
+	$C'\subsetneq C:|C'|=1$
+	with $\beta = 0$ and $1$, respectively.
+\end{Proof}
+
