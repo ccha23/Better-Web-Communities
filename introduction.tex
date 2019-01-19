@@ -13,10 +13,6 @@ In this work, we consider the problem of graph clustering, see e.g., \cite{fortu
 are identified based on their interconnections. This has significant applications in studying social
 and biological systems where related entities tend to interact more with each other compared to
 unrelated ones.
-%As a result, with edges representing interactions, a community appear as a dense subgraph whose
-%members share more connections 
-%and therefore form
-%dense subgraphs where an edge represent an interaction.
 Although the notion of community is
 intuitive, the challenge, however, is to find a precise mathematical definition that efficiently
 identifies the communities of interest.
@@ -36,24 +32,12 @@ It was shown that the computation reduces to finding the mincuts of some modifie
 set of all such communities, or cut clusters, form a hierarchy, which can be represented efficiently
 by a dendrogram.
 
-%However, the hierarchical structure of cut-clusters rely on the graph being undirected. Furthermore,
-%we find that cut-clustering often fails to return dense subgraphs but instead returns the less
-%interconnected peripherals of the dense subgraphs. This behaviour is not surprising since, for a given
-%size, a set of nodes having fewer external connections does not necessarily imply they have more
-%internal connections. In other words, a dense subgraph may have many external connections in the
-%original graph, while a sparse subgraph can have very few external connections in the orignal graph.
-%In this work, we primarily focus on improving the cut-clustering algorithm. Our proposed solution
-%not only resolves the problem with no additional cost in computation and storage, but can also be
-%generalized to cluster digraphs or more general non-graphical networks with a submodular cost
-%function. 
 However, the hierarchical structure of cut-clusters rely on the graph being undirected. Furthermore,
 we find that cut-clustering often fails to return dense subgraphs but instead returns the less
 interconnected peripherals of the dense subgraphs. This behaviour is not surprising since, for a given
 size, a set of nodes having fewer external connections does not necessarily imply they have more
 internal connections. In other words, a dense subgraph may have many external connections
 with the rest of the graph compared with the external connections of a sparser subgraph.
-%Nevertheless, it is intuitive in the
-%original graph, while a sparse subgraph can have very few external connections in the orignal graph.
 In this work, we primarily focus on improving the cut-clustering algorithm. Our proposed solution
 not only resolves the problem with no additional cost in computation and storage, but can also be
 generalized to cluster digraphs or more general non-graphical networks with a submodular cost

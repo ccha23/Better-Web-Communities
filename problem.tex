@@ -1,7 +1,7 @@
 \section{A better formulation}
 \label{sec:problem}
  
-We propose the following more sophisticated definition of communities parameterized by different quality requirements. The communities will be shown to have a meaningful hierarchical structure that can be computated and represented in polynomial-time using maxflow algorithms.
+We propose the following more sophisticated definition of communities parameterized by different quality requirements. The communities will be shown to have a meaningful hierarchical structure that can be computed and represented in polynomial-time using maxflow algorithms.
 
 \begin{definition}
   \label{def:alpha-beta}
@@ -104,7 +104,7 @@ may not be web communities, and they cannot be identified unless $`b>0$.
 The following example illustrates the definition of the communities and its desired property.
 \begin{example}
   \label{eg:mcC}
-  Consider \figref{fig:eg-disconnected} as in Example~\ref{eg:too-many-communities}. Assuming $`b=0$, we have $f(C)=w(V`/C,C)$ by \eqref{eq:fb}. It is easy to see that $\hat{f}(0)=0$ because the solution to \eqref{eq:fhat} when $`a=0$ are the unions of the matched pairs $C_i:=\Set{2i,2i+1}$ for $0\leq i<n/2$. By \eqref{eq:mcS}, $\mcS_0$ is the set of matched pairs $C_i$'s since they are inclusionwise minimal solutions that are non-singleton. Similarly, it is straightforward to show that for
+  Consider \figref{fig:eg-disconnected} as in Example~\ref{eg:too-many-communities}. Assuming $`b=0$, we have $f(C)=w(V`/C,C)$ by \eqref{eq:fb}. It is easy to see that $\hat{f}(0)=0$ because the solution to \eqref{eq:fhat} when $`a=0$ are the unions of the matched pairs $C_i:=\Set{2i,2i+1}$ for $0\leq i<n/2$. By \eqref{eq:mcS}, $\mcS_0$ is the set of matched pairs $C_i$'s since they are inclusion-wise minimal solutions that are non-singleton. Similarly, it is straightforward to show that for
   \begin{itemize}
 	  \setlength\itemsep{-.8em}
 	  \item $`a<0$: $\hat{f}(`a) = `a\abs{V}$ and $\mcS_{`a}=\Set{V}$.\\
