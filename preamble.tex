@@ -1,3 +1,8 @@
+% For page limit
+
+\newif\ifPAGELIMIT
+\PAGELIMITfalse
+%\PAGELIMITtrue
 
 %\usepackage[OT1,T1]{fontenc}
 
@@ -152,7 +157,7 @@
 %  \rlap{\raisebox{.45\ht0}{\color{#1}\rule{\wd0}{1pt}}}#2}
 
 % hyperlink
-\PassOptionsToPackage{breaklinks,letterpaper,hyperindex=true,backref=false,bookmarksnumbered,bookmarksopen,linktocpage,colorlinks,linkcolor=BrickRed,citecolor=OliveGreen,urlcolor=Blue,pdfstartview=FitH}{hyperref}
+\PassOptionsToPackage{breaklinks,hyperindex=true,backref=false,bookmarksnumbered,bookmarksopen,linktocpage,colorlinks,linkcolor=BrickRed,citecolor=OliveGreen,urlcolor=Blue,pdfstartview=FitH}{hyperref}
 \usepackage{hyperref}
 
 
@@ -314,7 +319,7 @@
 \newqsymbol{`>}{\rangle}
 
 %%% new operators / functions %%%
-
+\newcommand{\ccdot}{\!\cdot\!}
 \newcommand{\sgn}{\operatorname{sgn}}
 \newcommand{\Var}{\op{Var}}
 \newcommand{\diag}{\operatorname{diag}}

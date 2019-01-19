@@ -75,12 +75,12 @@ The modularity \cite{newman2006modularity}, Infomap \cite{rosvall2009map}, and c
 minimization \cite{shi2000normalized} formulations lead to NP-hard problems, and so rely on
 approximations.
 Modularity optimization, despite its popularity, has some limitations as pointed out in
-\cite{add}. One limitation is the resolution limit where the modularity score is tends to favour larger
+\cite{fortunato2007resolution}. One limitation is the resolution limit where the modularity score is tends to favour larger
 communities. 
 For instance, for the graph in Fig.~\ref{fig:modularity_2} (right), the  modularity score is
 minimized by the entire set, and so it fails to detect the more meaningful communities $\Set{0,1}$
 and $\Set{2,3}$, which can be identified using our formulation.
-Another example is  the ring of cliques \cite{add} shown in \ref{fig:modularity_2} (left) for 
+Another example is  the ring of cliques \cite{fortunato2007resolution} shown in \ref{fig:modularity_2} (left) for 
 $30$ cliques each of size $5$. In this case, the modularity method
 groups two consecutive cliques as one cluster, while our formulation can identify every clique.
 
