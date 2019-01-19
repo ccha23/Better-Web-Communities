@@ -2,7 +2,7 @@
 \section{Computation}
 \label{sec:computation}
 
-In this section, we will derive a polynomial-time algorithm to returned the proposed community hierarchy $\mcC$ for any given $`b\in [0,1]$. The algorithm is available on GitHub.\footnote{\url{https://github.com/handasontam/Alpha-Beta-Communities}}
+In this section, we will derive a polynomial-time algorithm to returned the proposed community hierarchy $\mcC$ for any given $`b\in [0,1]$. The implementation is available at~\cite{long}.%\footnote{\url{https://github.com/handasontam/Alpha-Beta-Communities}}
 
 \subsection{Divide-and-conquer}
 
@@ -187,14 +187,16 @@ minimization \eqref{eq:g-community}, then we have the following proposition.
 	%sparser subgraph. In this situation, it is intuitive to regard the dense subgraph, rather than
 	%the sparse one, as a community as long as the external connections of this dense subgraph are
 	%weak compared to its internal ones.
-\end{example}
-In the above example, the non-trivial community at $\beta =1$ is a web-community, which is
+	
+	In this example, the non-trivial community at $\beta =1$ is a web-community, which is
 desirable. However, for the same reason mentioned in the example, a community at $\beta > 0$ may
 still be desirable even if it is not a web-community. For instance, consider the graph in
 Fig.~\ref{fig:eg-star}. The set $\Set{0,1}$ is not a web-community since node~$1$ is more
 connected with the rest of the graph than it is with node~$0$. Despite this, it is still desirable
 to consider this set as a community since it is the desnsest $2$-subgraph. This set is indeed a
 community according to our fomrulation and can be returned at $\beta=1$ and $\alpha\in [2,6)$. 
+\end{example}
+
 %See Corollary~\ref{cor:alpha-beta-supporting}
 
 %%%%%%%%%%%

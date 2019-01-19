@@ -78,6 +78,36 @@ We start by providing an explicit characterization of cut-clusters, which is abs
 % So the constructed Gomory-Hu tree can be used as the tree for obtaining cut-clusters by removing the node $a$, and then the clusters $C_1, C_2,...,C_m$ are obtained, and the clusters with size larger than 1 are cut-clusters, which can be represented as $\{C_i | 1 \leq i \leq m, |C_i|>1 \}$, or maximal$\{C_{\alpha 0 t} | t \in V \} \setminus \{\{i\} | i \in V \}$.\\
 
 %%%%%%%%%%%%%%
+
+\begin{figure}
+	\center
+%	\def\figsep{-.19cm}
+%	\def\dist{.9}
+%	\def\disty{.9}
+%	\def\s{.88}
+	\def\figsep{.5cm}
+	\def\dist{1}
+	\def\disty{.9}
+	\def\s{1}
+	%\subcaptionbox{\label{fig:eg-dchain}}{
+		\begin{tikzpicture}[scale=\s, transform shape]
+			\tikzset{edge/.style={<-, > = stealth}}
+			\node(0) at (0*\dist,0){$0$};
+			\node(1) at (0,1*\dist){$1$};
+			\node(2) at (\dist,1*\dist){$2$};
+			\node(3) at (\dist,0*\dist){$3$};
+			\draw[edge] (0)--node[left]{$2$}(1); 
+			\draw[edge] (3)--node[right]{$2$}(2); 
+			\draw[edge] (1) edge[bend left] node[above]{$3$}(2);
+			\draw[edge] (2) edge[bend left] node[below]{$3$}(1);
+		\end{tikzpicture}
+	%}
+
+	%\caption{The weighted graphs for Examples~\ref{eg:directed-undirected} and \ref{eg:too-many-communities}}
+	\caption{The weighted graphs for Example~\ref{eg:chain-cut}}
+    \label{fig:eg-dchain}
+\end{figure}
+
 \begin{example}
 	\label{eg:chain-cut}
 	Consider the undirected graph in Fig.~\ref{fig:eg-chain}.
