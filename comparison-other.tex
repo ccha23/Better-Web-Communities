@@ -83,21 +83,30 @@ and $\Set{2,3}$, which can be identified using our formulation.
 Another example is  the ring of cliques \cite{fortunato2007resolution} shown in \ref{fig:modularity_2} (left) for 
 $30$ cliques each of size $5$. In this case, the modularity method
 groups two consecutive cliques as one cluster, while our formulation can identify every clique.
-
-Methods that are based on conductance minimization may also suffer since they tend to favour solutions of
+%
+%Methods that are based on conductance minimization may also suffer since they tend to favour solutions of
+Conductance-minimization based methods may also suffer since they tend to favour solutions of
 relatively equal size.\footnote{While this is desirable in some applications, it can also lead to some
 undesirable solutions.} An example graph demonstrating this is shown in Fig.~\ref{fig:conductance}.
 A similiar issue is faced by Infomap as shown in Figs.~\ref{fig:infomap} and \ref{fig:infomap2}.
 
 
-Fig. \ref{fig:LFR} shows that many existing methods fail to find strong communities of large sizes
-as returned by our proposed methods. The result uses a synthetic graphical network randomly
-generated using an existing method. However, this generation targets partitional clustering methods,
+Finally, Fig. \ref{fig:LFR} shows that many existing methods fail to find strong communities
+\eqref{eq:`s} of large sizes as compared to our method.
+The experiment was conducted on a random graph generated according to the LFR benchmark with $\mu = 0.1$
+\cite{lancichinetti2009benchmarks}.
+%result uses a synthetic graphical network randomly generated using an existing method.
+However, the LFR model generates graphs that are geared towards partitional clustering methods,
 and so we expect even more discrepancies when testing on real-world networks that are hierarchical
-in nature. It is also an interesting but challenging problem to generate synethetic networks to test
-hierarchical clustering methods.
+in nature.
+%It is also an interesting but challenging problem to generate synethetic networks to test hierarchical clustering methods.
 
 
-
+%%%%%%%%%%%% figure: small graphs
 \input{figure-comparison-other.tex}
+%%%%%%%%%%%% figure: small graphs
+
+
+%%%%%%%%%%%%%% figure: LFR
 \input{figure-strength-lfr.tex}
+%%%%%%%%%%%%%% figure: LFR

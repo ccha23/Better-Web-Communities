@@ -56,10 +56,10 @@
 \end{Proof}
 
 \begin{Proof}[Proposition~\ref{prop:cut-clusters-from-candidates}]
-  With $`b=0$, we have $f(C)=w(V`/C,C)$ and so $C_{`a`bt}$ is the
+  With $`b=0$, we have $f(C)=w(V`/C,C)$ and so $C_{`a`,t}$ is the
   inclusion-wise minimum solution to
   \begin{align*}
-    \min_{C\in V:t\in C} w(V`/C,C) + `a\abs{C}.
+    \min_{C\subseteq V:t\in C} w(V`/C,C) + `a\abs{C}.
   \end{align*}
   Consider adding a new node $s\not\in V$ to the graph and an
   undirected edge from $s$ to each node $i\in V$ with edge weight
