@@ -1,8 +1,6 @@
-#Finding Better Web Communities in Digraphs via Max-Flow Min-Cut
+# Finding Better Web Communities in Digraphs via Max-Flow Min-Cut
 
-Finding Better Web Communities in Digraphs via Max-Flow Min-Cut
-
-##Implementation
+## Implementation
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/handasontam/Alpha-Beta-Communities/master)
 Click [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/handasontam/Alpha-Beta-Communities/master) to launch a live demo in a Jupyter notebook.
