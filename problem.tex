@@ -22,21 +22,21 @@ We propose the following more sophisticated definition of communities parameteri
         \begin{align}
           f_{`a}(C)=\hat{f}(`a)< \min_{B\subsetneq C:\abs{B}\geq 1} f_{`a}(B),\label{eq:mcS}
         \end{align}
-        i.e., $C$ is an inclusion-wise minimal solution \eqref{eq:alpha-beta-community}. For each community $C\in \mcC$, we define
+        i.e., $C$ is an inclusion-wise minimal solution to \eqref{eq:fhat}. For each community $C\in \mcC$, we define
         \begin{align}
           `s(C) := \sup\Set*{`a\in `R \mid C\in \mcS_{`a}}\label{eq:`s}
         \end{align}
         as a measure of the strength of the community.
 \end{definition}
 
-Subsequently, unless explicitly specified otherwise, a community will always refer to one according
+Subsequently, unless otherwise specified in the context, a community will refer to one according
 the definition above. 
 In the definition,
 the parameters $\alpha$ and $\beta$ allow for a tuning of the quality of the communities.
 Namely, the cost function $f(C)$~\eqref{eq:fb} penalizes the \emph{external influence}
 $w(V`/ C, C)$ and rewards the \emph{internal influence} $w(C,C)$. Since the entire set $V$
 trivially minimizes the external influence and maximizes the internal influence, we further penalize the
-size of $C$ in the objective function $f_{`a}$~\eqref{eq:fab} with $`a\geq 0$ to obtain more compact
+size of $C$ in the objective function $f_{`a}(C)$~\eqref{eq:fab} with $`a\geq 0$ to obtain more compact
 communities. A simple connection to web communities is given by the following result, which provides a strong guarantee on the quality of the communities than that of the cut-clusters in~\cite[Lemma~3.1]{flake:cut-clustering}.
 
 
@@ -65,31 +65,15 @@ communities. A simple connection to web communities is given by the following re
 	%\end{align}
 \end{corollary}
 
-% Comparing \eqref{eq:single-shrink} to the defining condition \eqref{eq:support-community} of a
-% web community, the parameter $\alpha$ strengthens the condition by enlarging the gap between the
-% internal support $i$ provides to the community and the external support $i$ receives from outside
-% the community, thereby leading to web communities with larger internal support relative to
-% external support. In particular, we have the following condition for an $(\alpha,\beta)$-community
-% to be a web community. (Trivially holds when $\beta = 0$.)
-
-%Equation~\eqref{eq:single-shrink} relates communities and web-communities by providing a handle on the deviation
-%between the two in terms of the gap between the internal and external influences. For instance, for
-Equation~\eqref{eq:single-shrink} relates communities and web-communities by 
-bounding the gap between the internal and external influences in terms of the community
-parameters. For instance, for
-$\beta = 0$, a community is always a web-community for $\alpha\geq 0$, and, moreover, $\alpha$ 
-provides a lower bound on the gab between the internal and external influences.
-%Note that the parameter $\beta$ appears to diminish the gap between the
-%internal and external support as can be seen from \eqref{eq:single-shrink}. Contrary to its 
-%apparent undesirable effect, the parameter $\beta$ is one of the main
-%contributions in this work which is introduced here to improve on an important limitation of the
-%previous approach in \cite{flake:cut-clustering}. Indeed, we argue that there can also be meaningful communities that are not web communities, and that they cannot be identified unless $`b>0$.
-Note that while the parameter $\beta$ might appear to have an undesirable effect by diminishing the gap between the
-internal and external support, and so leading to communities that are not web-communities,
-it is one of the contributions we claim in this work.
-%which is introduced here to improve on an important limitation of the previous approach in \cite{flake:cut-clustering}.
-Indeed, as will be argued in a subsequent section, there can be meaningful communities that may or
-may not be web communities, and they cannot be identified unless $`b>0$.
+Equation~\eqref{eq:single-shrink} relates our communities and web communities by bounding the gap
+between the internal and external influences in terms of the community parameters. For instance, for
+$\beta = 0$, a community is always a web community for $\alpha\geq 0$, and, moreover, $\alpha$
+provides a lower bound on the gab between the internal and external influences.  Note that while the
+parameter $\beta$ might appear to have an undesirable effect by diminishing the gap between the
+internal and external influences, and so leading to communities that are not web communities, it is
+one of the contributions we claim in this work.  Indeed, as will be argued in a subsequent section,
+there can be meaningful communities that may or may not be web communities, and they cannot be
+identified unless $`b>0$.
 
 
 

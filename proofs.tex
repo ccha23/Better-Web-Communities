@@ -16,8 +16,7 @@
 	\\ &
 	= w(V\backslash C,i) - w(i,C)  - \beta\ccdot w(V,i),
 	\end{align*}
-	which gives \eqref{eq:single-shrink} as desired. \eqref{eq:single-expand} can be proved similarly by considering $C\cup \Set{i}$ for $i$ in $V`/C$ instead.
-	Similarly, we can prove 
+	which gives \eqref{eq:single-shrink} as desired. \eqref{eq:single-expand} can be proved similarly by considering $C\cup \Set{i}$ for $i$ in $V`/C$.
 	
 %	For all $i\in C$, we have $C\backslash \Set{i}$ is a feasible solution to
 %	\eqref{eq:alpha-beta-community} since $|C| \geq 2$, and so by the optimality of $C$
@@ -55,25 +54,11 @@
 %%	$$w(\{s\} \cup V\backslash (C\cup \{i\}), C\cup \{i\}) =  w(\{s\}\cup V\backslash C, C) + \alpha - \beta d_{i} - w(i,C) + w(V\backslash C, \{i\}), \ \forall i\in V\backslash C.$$
 \end{Proof}
 
-\begin{Proof}[Proposition~\ref{prop:cut-clusters-from-candidates}]
-  With $`b=0$, we have $f(C)=w(V`/C,C)$ and so $C_{`a`,t}$ is the
-  inclusion-wise minimum solution to
-  \begin{align*}
-    \min_{C\subseteq V:t\in C} w(V`/C,C) + `a\abs{C}.
-  \end{align*}
-  Consider adding a new node $s\not\in V$ to the graph and an
-  undirected edge from $s$ to each node $i\in V$ with edge weight
-  $`a$. It can be shown easily that a solution $C$ to the above
-  minimization gives an $s$-$t$ mincut $(V`/C,C)$ of the augmented graph and
-  vice versa, and so $C_{`a`bt}$ coincides with the definition of
-  communities in \cite[Lemma~3.1]{flake:cut-clustering}. Since
-  cut-clustering returns a partition of $V$, the returned communities
-  are the maximal candidates.
-  
-%  With $`b=0$, we have $f_{`b}(C)=w(V`/C,C)$ and so $C_{`a`bt}$ is the
+%\begin{Proof}[Proposition~\ref{prop:cut-clusters-from-candidates}]
+%  With $`b=0$, we have $f(C)=w(V`/C,C)$ and so $C_{`a,t}$ is the
 %  inclusion-wise minimum solution to
 %  \begin{align*}
-%  \min_{C\in V:t\in C} w(V`/C,C) + `a\abs{C}.
+%    \min_{C\subseteq V:t\in C} w(V`/C,C) + `a\abs{C}.
 %  \end{align*}
 %  Consider adding a new node $s\not\in V$ to the graph and an
 %  undirected edge from $s$ to each node $i\in V$ with edge weight
@@ -83,8 +68,22 @@
 %  communities in \cite[Lemma~3.1]{flake:cut-clustering}. Since
 %  cut-clustering returns a partition of $V$, the returned communities
 %  are the maximal candidates.
-
-\end{Proof}
+%  
+%%  With $`b=0$, we have $f_{`b}(C)=w(V`/C,C)$ and so $C_{`a`bt}$ is the
+%%  inclusion-wise minimum solution to
+%%  \begin{align*}
+%%  \min_{C\in V:t\in C} w(V`/C,C) + `a\abs{C}.
+%%  \end{align*}
+%%  Consider adding a new node $s\not\in V$ to the graph and an
+%%  undirected edge from $s$ to each node $i\in V$ with edge weight
+%%  $`a$. It can be shown easily that a solution $C$ to the above
+%%  minimization gives an $s$-$t$ mincut $(V`/C,C)$ of the augmented graph and
+%%  vice versa, and so $C_{`a`bt}$ coincides with the definition of
+%%  communities in \cite[Lemma~3.1]{flake:cut-clustering}. Since
+%%  cut-clustering returns a partition of $V$, the returned communities
+%%  are the maximal candidates.
+%
+%\end{Proof}
 
 
 

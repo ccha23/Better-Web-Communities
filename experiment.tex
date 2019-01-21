@@ -64,19 +64,19 @@ peripherals.
 %centers, i.e., the peripherals of the webs consist of vertex disjoint chains. The goal is to detect
 %the web centers as communities since they are the denser subgraphs.
 
+
 The desired center is identified as a community in Fig.~\ref{fig:oneweb-community}, while
-cut-clustering only returns undesirable solutions Fig.~\ref{fig:oneweb-cut1} and
-\ref{fig:oneweb-cut1}. (See Fig.~\ref{fig:oneweb} caption for details.) 
-Note that the desired center is not a web-community sice each of its four courner nodes does not
+cut-clustering only returns undesirable solutions, Figs.~\ref{fig:oneweb-cut1} and
+\ref{fig:oneweb-cut2}. (See the figure's caption for details.) 
+Note that the desired center is not a web community since each of its four corner nodes does not
 satisfy \eqref{eq:support-community}, which demonstrates the benefit of choosing $\beta > 0$.
 This also explains the undesirable behaviour of cut-clustering since a cut-cluster allows at most
 one of its members to violate \eqref{eq:support-community} \cite[Lemma~3.1]{flake:cut-clustering}.
-(See \ifPAGELIMIT\cite[Appendix~A]{long}\else Appendix~\ref{sec:comparison-cut}\fi for more details.) Similar observations can be made using
-Fig.~\ref{fig:twowebs}, where it is not hard to see that the same issues extend to larger, and other
-types of, graphs.
-More experimental results on synthetic and real-world data sets can be found in
+(See \ifPAGELIMIT\cite[Appendix~A]{long} \else Appendix~\ref{sec:comparison-cut} \fi for more details.)
+Similar observations can be made using Fig.~\ref{fig:twowebs}, where it is not hard to see that the
+same issues extend to larger, and other types of, graphs.  More experimental results on synthetic
+and real-world data sets can be found in
 \ifPAGELIMIT\cite[Appendix~B]{long}.\else Appendix~\ref{sec:comparison-other}.\fi
-
 
 
 %To illustrate the benefits of the proposed communities over cut-clustering for larger networks than those in \figref{fig:eg12}, we implemented and tested both algorithms on the graphs in \figref{fig:web-center}. Note that all the graphs in \figref{fig:web-center} contains web centers, each of which consist of nodes interconnected into $2$-by-$2$ grids. The nodes between different web centers, i.e., the peripherals of the webs consist of vertex disjoint chains. The goal is to detect the web centers as communities since they are the denser subgraphs.

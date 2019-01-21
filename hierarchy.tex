@@ -8,13 +8,13 @@ forms a hierarchy and so can be represented by a dendrogram in linear storage.
 \begin{theorem}
   \label{thm:hierarchy}
   For $`a_1\geq `a_2\geq 0$ and $C_i\in \mcS_{`a_i}$ for $i=1,2$, we have $C_1\subseteq C_2$ or
-  $C_1\cap C_2=`0$. Furthermore, $C_1\subsetneq C_2$ implies $`a_1>`a_2$. Hence, the set $\mcC$ of communities can be represented by a dendrogram with $`s$ measuring the cophenetic similarity of the dendrogram.
+  $C_1\cap C_2=`0$. Furthermore, $C_1\subsetneq C_2$ implies $`a_1>`a_2$. Hence, the set $\mcC$ of communities can be represented by a dendrogram with the strength $`s$ measuring the cophenetic similarity of the dendrogram.
 \end{theorem}
 
 The hierarchical structure can be observed from Example~\ref{eg:mcC}, where matched pairs $C_i$'s
 are disjoint communities with the same strength $`s(C_i)=1$. Since the trivial community $V$
 contains a matched pair, it has a strictly smaller strength $`s(V)=0$ as expected.
-We remark that the proof of the theorem relies only on the submodularity~\eqref{eq:submodular} of
+We remark that the proof of the theorem relies only on the submodularity (discussed in Section~\ref{sec:computation}) of
 $f_{\beta}$, and so the theorem extends to submodular functions that are not necessarily defined in
 terms of graph cut. 
 
@@ -36,8 +36,8 @@ on the marginal change in the cost of a community.
   (By convention, we set the r.h.s. of \eqref{eq:f-expand} to $-\infty$ if $C=V$.)
 \end{theorem}
 
-In other words, $`a$ is both a lower bound~\eqref{eq:f-shrink} of the marginal increase in the cost
-$f$ when the community shrinks, and an upper bound~\eqref{eq:f-expand} of the marginal decrease in
+In other words, $`a$ is both a lower bound~\eqref{eq:f-shrink} on the marginal increase in the cost
+$f$ when the community shrinks, and an upper bound~\eqref{eq:f-expand} on the marginal decrease in
 the cost $f$ when the community expands. The above theorem can be viewed as a generalization of
 Proposition~\ref{pro:single-deviation} because \eqref{eq:single-shrink} and \eqref{eq:single-expand}
 are the special cases when we further impose $B=C`/\Set{i}$ for $i\in C$ in \eqref{eq:f-shrink}, and
@@ -73,9 +73,10 @@ shows, the result also ties back to the notion of graph expansion used to measur
 \begin{Proof}
   (ii) and (iii) follow from \eqref{eq:f-shrink} and \eqref{eq:f-expand} with $\beta=0$ and $1$,
   respectively. (i) and (iv) follow from \eqref{eq:f-expand} and \eqref{eq:f-shrink} by choosing
-	$A= V$ 
+ 	$A= V$ 
+	with $\beta = 0$
 	and
 	$B\subsetneq C:|B|=1$
-	with $\beta = 0$ and $1$, respectively.
+	with $\beta = 1$, respectively.
 \end{Proof}
 

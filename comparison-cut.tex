@@ -3,7 +3,9 @@
 \label{sec:comparison-cut}
 
 In this section we compare our formulation to cut-clusters, which were introduced in
-\cite{flake:cut-clustering} as a tractable alternative to web-communities.
+\cite{flake:cut-clustering} as a tractable alternative to web communities.
+%(See Section~\ref{sec:preliminaries} for definitions of web communities and cut-clusters.)
+%
 %Note that when $\beta=0$ and the graph is undirected, the augmented graph in
 %Definition~\ref{def:augmented} is the same for all $t\in V$. For this augmented graphs, one can
 %compute a Gomory-Hu tree. The cut-clusters are defined as the connected components of the tree after
@@ -36,15 +38,15 @@ We start by providing an explicit characterization of cut-clusters, which is abs
 
 \begin{Proof}
   We first define the cut-clusters more precisely as follows.
-  Consider an undirected graph and its $`a$-augmented graph in Definition~\ref{def:augmented} but with additional edges $(t,s)$ of weight $`a$ for $t\in V$. Note that the additional edges $(t,s)$ does not contribute to any $s$--$t$ cuts and so all the $s$--$t$ cut values remain unchanged. The purpose of the additional edges is to turn the augmented graph into an undirected augmented graph so that a Gomory-Hu tree of the augmented graph is well-defined. 
+  Consider an undirected graph and its $`a$-augmented graph in Definition~\ref{def:augmented} but with additional edges $(t,s)$ of weight $`a$ for $t\in V$. Note that the additional edges $(t,s)$ does not contribute to any $s$--$t$ cut and so all the $s$--$t$ cut values remain unchanged. The purpose of the additional edges is to turn the augmented graph into an undirected augmented graph so that a Gomory-Hu tree (of the augmented graph) is well-defined. 
   Let $T$ be a Gomory-Hu tree of the undirected augmented graph and $\mcP$ be the set of connected components of $T$ after removing $s$. 
-  Recall from \cite{flake:cut-clustering} and the end of Section~\ref{sec:introduction} that the set of cut clusters at threshold $`a$ is the set of non-singleton elements in $\mcP$. Since the Gomory-Hu tree may not be unique, the elements of $\mcP$ are further required to be inclusion-wise minimal. 
+  Recall from \cite{flake:cut-clustering} and the end of Section~\ref{sec:preliminaries} that the set of cut clusters at threshold $`a$ is the set of non-singleton elements in $\mcP$. Since the Gomory-Hu tree may not be unique, the elements of $\mcP$ are further required to be inclusion-wise minimal. 
   
   We will show that the cut clusters are given by \eqref{eq:cut-clusters}. In particular, we will show that
   \begin{align}
       \mcP\subseteq \op{maximal}\Set{C_{`a,t}\mid t\in V}, \label{eq:cut-clusters:1}
   \end{align}
-  which imply the desired result trivially. By the properties of Gomory-Hu tree, for any $t\in V$,
+  which implies the desired result trivially. By the properties of Gomory-Hu tree, for any $t\in V$,
   \begin{enumerate}
       \item\label{prop:cc:1} the $s$--$t$ mincut value $\hat{f}_t(`a)$ of the augmented graph can be obtained as the minimum weight of an edge in the unique path between $s$ and $t$ in $T$, and
       \item\label{prop:cc:2} the connected components of $T$ after removing the minimum weight edge are the cut sets $V`/C$ and $C$ where $C$ is an optimal solution to $\hat{f}_t(`a)$ in \eqref{eq:g-candidate}.
@@ -52,11 +54,11 @@ We start by providing an explicit characterization of cut-clusters, which is abs
   For simplicity, consider the case where the solution to $\hat{f}_t(`a)$ in \eqref{eq:g-candidate} is uniquely equal to $C_{`a,t}$ for all $t\in V$. 
   Let $s$ be the root of $T$. It is readily seen that $C_{`a,t}$ corresponds to a proper subtree of $T$ by the above properties. Furthermore, each element of $\mcP$ is equal to $C_{`a,t}$ for a neighbor $t$ of $s$ in $T$, since the path from $s$ to $t$ in $T$ contain only the edge $(s,t)$. This implies \eqref{eq:cut-clusters:1} because $\mcP$ corresponds to the maximal proper subtrees of $T$.
   
-  Finally, consider the remaining case where the solution to $\hat{f}_t(`a)$ in \eqref{eq:g-candidate} may not be unique. It suffices to argue that a Gomory-Hu tree exists where the value of $C$ in Property~\ref{prop:cc:2} above is the minimal solution $C_{`a,t}$. We will show that it is possible to increase $`a$ slightly to ensure uniqueness without changing the minimal solutions to $\hat{f}_t(`a)$. More precisely, let $\mcC_{`a,t}$ be the set of solutions to $\hat{f}_t(`a)$. Consider any $`a'>`a$. Since $f_{`a}(C)$ is increasing in $`a$ and $C$,
+  Finally, consider the remaining case where the solution to $\hat{f}_t(`a)$ in \eqref{eq:g-candidate} may not be unique. It suffices to argue that a Gomory-Hu tree exists where the value of $C$ in Property~\ref{prop:cc:2} above is the minimal solution $C_{`a,t}$. We will show that it is possible to increase $`a$ slightly to ensure uniqueness without changing the minimal solutions to $\hat{f}_t(`a)$. More precisely, let $\mcC_{`a,t}$ be the set of solutions to $\hat{f}_t(`a)$. Consider any $`a'>`a$. Since $f_{`a}(C)$ is increasing in $`a$ and $C$, we have
   \[C\not\in \mcC_{`a',t}\quad \forall t\in V, C\in \mcC_{`a,t}`/\Set{C_{`a,t}}.\]
   However, since $f_{`a}(C)$ is continuous in $`a$, it is possible to choose $`a'$ sufficiently close to $`a$ such that
   \[ \mcC_{`a',t} = \Set{C_{`a,t}} \quad \forall t\in V,\] 
-  i.e., $C_{`a,t}$ remains optimal and not other $s$--$t$ cuts become optimal as we goes from $`a$ to $`a'$. Any Gomory-Hu tree of the $`a'$-augmented graph with edge weight $\hat{f}_t(`a')$ replaced by $\hat{f}_t(`a)$ satisfy Property~\ref{prop:cc:1} and \ref{prop:cc:2}. Hence, it can be used as the desired Gomory-Hu tree.
+  i.e., $C_{`a,t}$ remains optimal and no other $s$--$t$ cuts become optimal as we go from $`a$ to $`a'$. Any Gomory-Hu tree of the $`a'$-augmented graph with edge weight $\hat{f}_t(`a')$ replaced by $\hat{f}_t(`a)$ satisfy Property~\ref{prop:cc:1} and \ref{prop:cc:2}. Hence, it can be used as the desired Gomory-Hu tree.
 \end{Proof}
 
 
@@ -78,6 +80,69 @@ We start by providing an explicit characterization of cut-clusters, which is abs
 % So the constructed Gomory-Hu tree can be used as the tree for obtaining cut-clusters by removing the node $a$, and then the clusters $C_1, C_2,...,C_m$ are obtained, and the clusters with size larger than 1 are cut-clusters, which can be represented as $\{C_i | 1 \leq i \leq m, |C_i|>1 \}$, or maximal$\{C_{\alpha 0 t} | t \in V \} \setminus \{\{i\} | i \in V \}$.\\
 
 %%%%%%%%%%%%%%
+
+
+\begin{example}
+	\label{eg:chain-cut}
+	Consider the undirected graph in Fig.~\ref{fig:eg-chain}.
+	The web communities are listed in \eqref{eq:chain-communities}.
+%
+	Proposition~\ref{prop:cut-clusters-from-candidates} asserts that the cut-clusters are specified
+	by $\hat{f}_{t}(\alpha)$ for $t\in V$ (solid curves) in Fig.~\ref{fig:eg-chain-beta0} as
+	\begin{align}
+			\label{eq:eg-chain-cut}
+			\left\{
+				\!\!\!
+				\begin{array}{l@{\ }l}
+					%\Set{0}, \Set{1}, \Set{2}, \Set{3}, & `a \geq 2  
+					\emptyset, & `a \geq 2  
+					\\
+					\Set{0,1}, \Set{2,3}, & `a \in [1.5, 2)
+					\\
+					\Set{0,1,2,3}, &  `a < 1.5 \ ,
+				\end{array}
+			\right.
+	\end{align}
+	i.e., they are obtained by choosing the maximal elements in each row of \eqref{eq:eg-chain-candidates}.
+	Note that, in contrast to communities at $\beta = 0$, a cut-cluster may 
+	not be web community, e.g., for the cut-cluster $\Set{0,1}$, node $1$  has more
+	connections with the external node $2$ than it has with the member node $0$.
+	This contrast between cut-clusters and communities at $\beta = 0$
+	can be seen by comparing \eqref{eq:single-shrink} and \cite[Lemma~3.1]{flake:cut-clustering}.
+	Namely, while \eqref{eq:single-shrink} guarantees a positive gap between the internal and external
+	influences for every member of the community, \cite[Lemma~3.1]{flake:cut-clustering} guarantees this
+	for every member of the cut-cluster except possibly one member. 
+	%
+	Finally, note that cut-clustering fails to find the web community $\Set{1,2}$ since the formulation
+	lacks the ability to reward internal connections, see Example~\ref{eg:chain-community}.
+\end{example}
+%%%%%%%%%%%%%
+
+%
+	In addition to their closer relation to web communities (as observed in the previous example) communities at
+	$\beta = 0$ 
+	%Although both the communities at $\beta=0$ and the cut-clusters are obtained from the candidates
+	%at $\beta=0$, it is important to note that the communities
+	also come with stronger quality guarantees compared to cut-clusters.  This follows by observing that \eqref{eq:bound-beta0}~\uref{ii}
+provides a stronger guarantee than the bound on the expansion in \cite[Theorem~3.3]{flake:cut-clustering} 
+\begin{align}
+  `a \leq \min_{B\subsetneq C: \abs{B}\geq 1} \frac{w(C`/B,B)}{\min\Set{\abs{C`/B},\abs{B}}}. \label{eq:expand}
+\end{align}
+More precisely, for undirected graphs, \eqref{eq:bound-beta0}~\uref{ii} implies
+\begin{align}
+  \begin{split}
+  `a &< \min_{B\subsetneq C: \abs{B}\geq 1} \Set*{\frac{w(C`/B,B)}{\abs{C`/B}}, \frac{w(B,C`/B)}{\abs{B}}}\\
+  &= \min_{B\subsetneq C: \abs{B}\geq 1} \frac{w(C`/B,B)}{\max\Set{\abs{C`/B},\abs{B}}}.
+  \end{split}
+  \label{eq:expand_improved}
+\end{align}
+This is the same as \eqref{eq:expand} except that the minimization in the denominator is replaced by
+maximization, which gives a potentially better bound.
+
+%\textcolor{magenta}{
+%	aaa---possibly connect the above paragraph to conductance comparison.
+%}
+
 
 \begin{figure}
 	\center
@@ -104,72 +169,9 @@ We start by providing an explicit characterization of cut-clusters, which is abs
 	%}
 
 	%\caption{The weighted graphs for Examples~\ref{eg:directed-undirected} and \ref{eg:too-many-communities}}
-	\caption{The weighted graphs for Example~\ref{eg:chain-cut}}
+	\caption{An example showing the difficulty of extending cut-clusters to digraphs.}
     \label{fig:eg-dchain}
 \end{figure}
-
-\begin{example}
-	\label{eg:chain-cut}
-	Consider the undirected graph in Fig.~\ref{fig:eg-chain}.
-	The webcommunities are listed in \eqref{eq:chain-communities}.
-%
-	Proposition~\ref{prop:cut-clusters-from-candidates} asserts that the cut-clusters are specified
-	by $\hat{f}_{t}(\alpha)$ for $t\in V$ (solid curves) in Fig.~\ref{fig:eg-chain-beta0} as
-	\begin{align}
-			\label{eq:eg-chain-cut}
-			\left\{
-				\!\!\!
-				\begin{array}{l@{\ }l}
-					%\Set{0}, \Set{1}, \Set{2}, \Set{3}, & `a \geq 2  
-					\emptyset, & `a \geq 2  
-					\\
-					\Set{0,1}, \Set{2,3}, & `a \in [1.5, 2)
-					\\
-					\Set{0,1,2,3}, &  `a < 1.5 \ ,
-				\end{array}
-			\right.
-	\end{align}
-	i.e., they are obtained by choosing the maximal elements in each row of \eqref{eq:eg-chain-candidates}.
-	Note that, in contrast to communities at $\beta = 0$, a cut-cluster may 
-	not be web-community, e.g., for the cut-cluster $\Set{0,1}$, node $1$  has more
-	connections with the external node $2$ than it has with the member node $0$.
-	This contrast between cut-clusters and communities at $\beta = 0$
-	can be seen by comparing \eqref{eq:single-shrink} and \cite[Lemma~3.1]{flake:cut-clustering}.
-	Namely, while \eqref{eq:single-shrink} guarantees a positive gap between the internal and external
-	influences for every member of the community, \cite[Lemma~3.1]{flake:cut-clustering} guarantees this
-	for every member of the cut-cluster except possibly one member. 
-	%
-	Finally, note that cut-clustering fails to find the web-community $\Set{1,2}$ since the formulation
-	lacks the ability to reward internal connections, see Example~\ref{eg:chain-community}.
-\end{example}
-%%%%%%%%%%%%%
-
-%
-	In addition to their closer relation to web-communities (as observed in the previous example) communities at
-	$\beta = 0$ 
-	%Although both the communities at $\beta=0$ and the cut-clusters are obtained from the candidates
-	%at $\beta=0$, it is important to note that the communities
-	also come with stronger quality guarantees compared to cut-clusters.  This follows by observing that \eqref{eq:bound-beta0}~\uref{ii}
-provides a stronger guarantee than the bound on the expansion in \cite[Theorem~3.3]{flake:cut-clustering} 
-\begin{align}
-  `a \leq \min_{B\subsetneq C: \abs{B}\geq 1} \frac{w(C`/B,B)}{\min\Set{\abs{C`/B},\abs{B}}}. \label{eq:expand}
-\end{align}
-More precisely, for undirected graphs, \eqref{eq:bound-beta0}~\uref{ii} implies
-\begin{align}
-  \begin{split}
-  `a &< \min_{B\subsetneq C: \abs{B}\geq 1} \Set*{\frac{w(C`/B,B)}{\abs{C`/B}}, \frac{w(B,C`/B)}{\abs{B}}}\\
-  &= \min_{B\subsetneq C: \abs{B}\geq 1} \frac{w(C`/B,B)}{\max\Set{\abs{C`/B},\abs{B}}}.
-  \end{split}
-  \label{eq:expand_improved}
-\end{align}
-This is the same as \eqref{eq:expand} except that the minimization in the denominator is replaced by
-maximization, which gives a potentially better bound.
-
-\textcolor{magenta}{
-	aaa---possibly connect the above paragraph to conductance comparison.
-}
-
-
 
 %{\color{magenta} 
 Finally, in contrast to Theorem~\ref{thm:hierarchy} which can be extended to a general submodular function,
@@ -181,8 +183,8 @@ by setting $w(0,1)=w(3,2)=0$.
 %instead of $2$. We still have
 %$w(1,0)=w(2,3)=2$, i.e., we remove the outgoing edges of $0$ and $3$ but not the incoming edges.
 With $`a\in [0,1)$ and $`b=0$, it can be shown that $C_{`a,t}$ for $t=0$ and $3$ are
-$\Set{0,1,2}$ and $\Set{1,2,3}$ respectively, which are neither disjoint nor subsets of each
-other.
+$\Set{0,1,2}$ and $\Set{1,2,3}$ respectively, and that they are both maximal (over $t\in \Set{0,1,2,3}$) for the specified range of $`a$ values.
+However, they are neither disjoint nor subsets of each other.
 %}
 
 

@@ -2,7 +2,7 @@
 \section{Computation}
 \label{sec:computation}
 
-In this section, we will derive a polynomial-time algorithm to returned the proposed community hierarchy $\mcC$ for any given $`b\in [0,1]$. The implementation is available at~\cite{long}.%\footnote{\url{https://github.com/handasontam/Alpha-Beta-Communities}}
+In this section, we will derive a polynomial-time algorithm that returns the proposed community hierarchy $\mcC$ for any given $`b\in [0,1]$. The implementation is available at~\cite{long}.%\footnote{\url{https://github.com/handasontam/Alpha-Beta-Communities}}
 
 \subsection{Divide-and-conquer}
 
@@ -31,8 +31,8 @@ This can be seen by rewriting $f_{}$, defined in \eqref{eq:fb}, using the identi
 \begin{align}
   f_{}(C) = w(V`/C,C)-`b\sum_{i\in C} d_i,
 \end{align}
-which is submodular in $C$ since the graph cut $w(V`/C,C)$ and the sum $\sum_{i\in C} d_i$ are
-modular~\cite{fujishige05}.   
+which is submodular in $C$ since the graph cut $w(V`/C,C)$ is submodular (and the sum $\sum_{i\in C}
+d_i$ is modular)~\cite{fujishige05}.   
 
 \begin{definition}
 	\label{def:candidates}
@@ -98,10 +98,10 @@ minimization \eqref{eq:g-community}, then we have the following proposition.
 	It is straightforward to enumerate all the web communities \eqref{eq:support-community} as
 	\begin{align}
 		\label{eq:chain-communities}
-		\Set{0,1,2,3},
+		\Set{1,2},
 		\Set{0,1,2},
-		\Set{1,2,3}, %\text{and}
-		\Set{1,2}.
+		\Set{1,2,3}, % \text{ and }
+		\Set{0,1,2,3}.
 	\end{align}
 %
 	For $\beta = 0$, Fig.~\ref{fig:eg-chain-beta0}
@@ -170,11 +170,11 @@ minimization \eqref{eq:g-community}, then we have the following proposition.
 			\right.
 		\end{array}
 	\end{align}
-	All the communities at $\beta = 0$ (trivial in this example) are web-communities as
+	All the communities at $\beta = 0$ (trivial in this example) are web communities as
 	dictated by Corollary~\ref{cor:alpha-beta-supporting}.
 	Note also that
-	the web-community $\Set{1,2}$ is captured at $`b = 1$ but not $\beta=0$, i.e., when the cost
-	function \eqref{eq:fb} rewards the internal influence.%
+	the web community $\Set{1,2}$ is captured at $`b = 1$ but not $\beta=0$, i.e., when the cost
+	function \eqref{eq:fb} rewards the internal influence.
 %	\footnote{A community at $\beta > 0$ is not necessarily a webcommunity in general, although it
 %		happened to be the case in this simple example. See Corollary~\ref{cor:alpha-beta-supporting}
 %		for the exact condition.}
@@ -188,13 +188,13 @@ minimization \eqref{eq:g-community}, then we have the following proposition.
 	%the sparse one, as a community as long as the external connections of this dense subgraph are
 	%weak compared to its internal ones.
 	
-	In this example, the non-trivial community at $\beta =1$ is a web-community, which is
+	In the example above, the non-trivial community at $\beta =1$ is a web community, which is
 desirable. However, for the same reason mentioned in the example, a community at $\beta > 0$ may
-still be desirable even if it is not a web-community. For instance, consider the graph in
-Fig.~\ref{fig:eg-star}. The set $\Set{0,1}$ is not a web-community since node~$1$ is more
+still be desirable even if it is not a web community. For instance, consider the graph in
+Fig.~\ref{fig:eg-star}. The set $\Set{0,1}$ is not a web community since node~$1$ is more
 connected with the rest of the graph than it is with node~$0$. Despite this, it is still desirable
 to consider this set as a community since it is the desnsest $2$-subgraph. This set is indeed a
-community according to our fomrulation and can be returned at $\beta=1$ and $\alpha\in [2,6)$. 
+community according to our formulation and can be returned at $\beta=1$ and $\alpha\in [2,6)$. 
 \end{example}
 
 %See Corollary~\ref{cor:alpha-beta-supporting}
@@ -292,9 +292,11 @@ community according to our fomrulation and can be returned at $\beta=1$ and $\al
 
 \subsection{Using maxflow algorithm}
 
-Since $f(C)$ is a submodular function, the minimization problem \eqref{eq:alpha-beta-community} can be solved using any submodular function
-minimization (SFM) algorithm. However, a generic SFM algorithm is computationally expensive. Below we reduce the problem of finding the $(\alpha,\beta)$-candidate of any $t\in V$ to the  
-mincut problem of the following augmented graph.
+Since $f(C)$ is a submodular function, the minimization problem \eqref{eq:alpha-beta-community} can
+be solved using any submodular function minimization (SFM) algorithm. However, a generic SFM
+algorithm is computationally expensive. Below we reduce the problem of finding the
+candidate of $t\in V$ at any $\alpha$, $\beta$ to the  mincut problem of the following augmented graph.
+
 \begin{definition}
 	\label{def:augmented}
 	%Let $(V, A)$ be a digraph and let $d_i:= w(V\backslash \{i\},i)$ be the in-degree of node $i$ for any $i\in V$.
@@ -337,10 +339,11 @@ mincut problem of the following augmented graph.
 
 For a given $`a$ and $`b$, the set $\mcC$ of communities can be computed as follows:
 \begin{enumerate}
-\item Run the maxflow algorithm $n$ times, one for each $t\in V$ on the $(`a,`b,t)$-augmented graph to obtain $\hat{f}_t(`a)$ and its unique minimum solution $C_{`a,t}$.
+%\item Run the maxflow algorithm $n$ times, one for each $t\in V$ on the $(`a,`b,t)$-augmented graph to obtain $\hat{f}_t(`a)$ and its unique minimum solution $C_{`a,t}$.
+\item Run the maxflow algorithm $n$ times, namely, for each $t\in V$ run the maxflow algorithm on the $(`a,`b,t)$-augmented graph to obtain $\hat{f}_t(`a)$ and its unique minimum solution $C_{`a,t}$.
 \item Compute $\hat{f}(`a)$ as the minimum $\hat{f}_t(`a)$ over $t\in V$, and retain only the associated non-singleton $C_{`a, t}$ for $\mcS_{`a}$. 
 \end{enumerate}
 The second step can run in linear time and so the first step gives the overall complexity.
 
-We can use the parametric maxflow algorithm of~\cite{gallo89} to compute $\hat{f}_t(`a)$ for all $`a\geq 0$. The running time of the parametric algorithm is indeed the same as that of the push-relabel maxflow algorithm. Hence, we only need $n$ maxflow algorithms on the augmented graphs to obtain $\hat{f}_t(`a)$ and $C_{`a,t}$ for all $`a\geq 0$ and $t\in V$. We can then compute $\hat{f}(`a)$ as the minimum $\hat{f}_t(`a)$ over $t\in V$, and retain the associated non-singleton $C_{`a,t}$ for $\mcS_{`a}$. This step can be computed in $O(n^2)$ because there are at most $n$ line segments for each $\hat{f}_t(`a)$ and $\hat{f}(`a)$. 
+To compute the communities for all $\alpha \geq 0$, we can use the parametric maxflow algorithm of~\cite{gallo89} to compute $\hat{f}_t(`a)$ for all $`a\geq 0$. The running time of the parametric algorithm is indeed the same as that of the push-relabel maxflow algorithm. Hence, we only need $n$ maxflow computations on the augmented graphs to obtain $\hat{f}_t(`a)$ and $C_{`a,t}$ for all $`a\geq 0$ and $t\in V$. We can then compute $\hat{f}(`a)$ as the minimum $\hat{f}_t(`a)$ over $t\in V$, and retain the associated non-singleton $C_{`a,t}$ for $\mcS_{`a}$. This step can be computed in $O(n^2)$ because there are at most $n$ line segments for each $\hat{f}_t(`a)$ and $\hat{f}(`a)$. 
 

@@ -9,10 +9,10 @@ For convenience, we write
 \begin{align*}
   w(B,C) := \sum_{i\in B}\sum_{j\in C} a_{ij} \quad \text{for }B,C\subseteq V,
 \end{align*}
-$w(i,C):=\sum_{j\in C}a_{ij}$ for $i\in V$, and similarly, $w(B,j):=\sum_{i\in B}a_{ij}$ for $j\in
+$w(i,C):=\sum_{j\in C}a_{ij}$ for $i\in V$, and $w(B,j):=\sum_{i\in B}a_{ij}$ for $j\in
 V$. The weight $a_{ij}$ of edge $(i,j)\in V^2$ is taken to mean the influence of $i$ on $j$, which
 needs not be equal to the influence $a_{ji}$ of $j$ on $i$ for $i\neq j$. In the following
-definition, we generalizes the idea of web-communities in \cite{flake:efficient,
+definition, we generalizes the idea of web communities in \cite{flake:efficient,
 flake:cut-clustering} from graphs to digraphs.
 \begin{definition}
   \label{def:support-community}
@@ -21,8 +21,10 @@ flake:cut-clustering} from graphs to digraphs.
     \label{eq:support-community}
     w(i,C`/\Set{i}) > w(V`/ C,i), \ \forall i \in C,
   \end{align}
-  i.e., the total external influence on each member of a web community is strictly smaller than the
-  total influence the member has on other members of the community. 
+%  i.e., the total external influence on each member of a web community is strictly smaller than the
+%  total influence the member has on other members of the community. 
+  i.e., the total external influence on any member of a web community is strictly smaller than the
+  influence of that member on the remaining members of the community. 
 \end{definition}
 Note that singleton sets $\Set{i}$ for $i\in V$ are not web communities due to the strict inequality in \eqref{eq:support-community}. If $\MA$ is symmetric, which corresponds to a graph, the above definition reduces
 to the original definition in \cite{flake:cut-clustering}. The following example shows that our extension is non-trivial as the web communities can depend on the directions of the edges.
@@ -106,15 +108,22 @@ An issue with the above definition of communities is that there can be exponenti
 
 \begin{example}
   \label{eg:too-many-communities}
-  For the graph in \figref{fig:eg-disconnected} where the edges with non-negative weights form a perfect matching, the web communities are all the non-empty subsets of the matched pairs. The number of communities is $2^{\abs{V}/2}-1$, which is exponential in $\abs{V}$.
+  For the graph in \figref{fig:eg-disconnected} where the edges form a perfect matching, the web communities are all the non-empty subsets of the matched pairs. The number of communities is $2^{\abs{V}/2}-1$, which is exponential in $\abs{V}$.
 \end{example}
 
-Since there can be exponentially many web communities, it is impractical to enumerate all of them for a large graph. Even for graphs of moderate sizes, returning many communities without any form of organization or measures of qualities are not helpful, especially if the goal is to study a large graphical network by breaking it down into subnetworks. 
+Since there can be exponentially many web communities, it is impractical to enumerate all of them for a large graph. Even for graphs of moderate sizes, returning many communities without any form of organization or measures of quality is not helpful, especially if the goal is to study a large graphical network by breaking it down into subnetworks. 
 
 In the case when the graph is undirected, \cite{flake:cut-clustering} proposed the cut-clustering algorithm below: 
 \begin{enumerate}
 \item For any parameter $`a\in `R$, add a new node $s$ to the graph.
 \item For each node $t\in V$, add an edge between $s$ and $t$ with weight $`a$.
-\item Construct a Gomory-Hu tree of the graph. Remove $s$ and return the resulting connected components, which is a partition of $V$. If the Gomory-Hu tree is not unique, construct the tree that gives the finest partition.
+\item Construct a Gomory-Hu tree of the graph. Remove $s$ from the tree and return the resulting connected components, i.e., a partition of $V$. If the Gomory-Hu tree is not unique, construct the tree that gives the finest partition.
 \end{enumerate}
-The above procedure is called cut-clustering, as each connected component returned corresponds to an $s$--$t$ mincut of the original graph augmented with the node $s$, by the property of the Gomory-Hu tree. We will call the non-singleton components as cut-clusters at threshold $`a$. It was shown that $`a$ serves as a parameter that measures the quality of the returned clusters in terms of graph expansion~\cite[(3.3)]{flake:cut-clustering}. However, the extension to digraphs is unclear since Gomory-Hu tree is defined for undirected graphs. There is also a limitation that the returned cut-clusters may not be web communities as one of the nodes in a cut cluster can fail to satisfy \eqref{eq:support-community}~\cite[Lemma~3.1]{flake:cut-clustering}.
+The above procedure is called cut-clustering since, by the property of the Gomory-Hu tree, each of
+the resulting connected components corresponds to an $s$--$t$ mincut of the graph augmented with
+$s$.  We will refer to the non-singleton components as cut-clusters at threshold $`a$. It was shown
+that $`a$ serves as a parameter that measures the quality of the returned clusters in terms of graph
+expansion~\cite[(3.3)]{flake:cut-clustering}. However, the extension to digraphs is unclear since
+Gomory-Hu trees are defined for undirected graphs. Another limitation is that a cut-cluster may not
+be a web community as one of the nodes in a cut-cluster can fail to satisfy
+\eqref{eq:support-community}~\cite[Lemma~3.1]{flake:cut-clustering}.
