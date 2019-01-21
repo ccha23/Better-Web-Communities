@@ -4,7 +4,7 @@
 In this section we compare our formulation to some existing ones. To simplify the discussions, we
 rely on simple examples to demonstrate some of the common issues that arise in graph clustering, and
 to point out similarities / differences between our method and some existing ones. We also present
-some experimental results on a synthetic and a real-world data sets to verify that our observatoins
+some experimental results on synthetic and real-world data sets to verify that our observatoins
 extend beyond demonstrating examples.
 
 %\textcolor{magenta}{aaa---this section is still under construction. in the short paper, the section will be replaced by
@@ -47,7 +47,7 @@ obtained using our algorithm with $\beta = 1$ and $\alpha \in [4,6)$, see
 Example~\ref{eg:chain-community}, but cannot be obtained using the formulation in
 \cite{nagano2011size} since the empty set achieves a minimum cost of zero over that range of
 $\alpha$.
-For the same reason the formulation in \cite{nagano2011size} cannot find any communities when
+For the same reason the formulation in \cite{nagano2011size} cannot find any community when
 $f$ is chosen to be the in-cut function, i.e., $\beta = 0$, since the empty set is trivially the
 optimal solution with zero size and zero in-cut.
 
@@ -62,37 +62,37 @@ By comparing the result of our algorithm to their proposed SSM algorithm, we are
 $51$ dense communities with cardinality larger than $2000$, while \cite{nagano2011size} reported that their SSM algorithm can only find
 two such communities.
 
-We remark that a web-community is not necessarily a densest subgraph.\footnote{Not to be confused
-	with our discussion in an earlier section where we remarked that a densest subgraph is not necessarily a web-community, e.g., see
+We pause here and remark that a web community is not necessarily a densest subgraph.\footnote{Not to be confused
+	with our discussion in an earlier section where we remarked that a densest subgraph is not necessarily a web community, e.g., see
 	Fig.~\ref{fig:eg-star}.} 
-For instance, consider the graph in Fig.~\ref{fig:DSP}.  The set $\{0,1\}$ is a web-community
+For instance, consider the graph in Fig.~\ref{fig:DSP}.  The set $\{0,1\}$ is a web community
 that is returned by our method, but it is not a densest $2$-subgraph since the subgraph $\{2,3\}$
-has strictly more internal support.  Hence, any graph clustering algorithm that only returns densest
-subgraphs will fail to return such a web-community.
+has strictly more internal connections.  Hence, any graph clustering algorithm that only returns densest
+subgraphs will fail to return such a web community.
 
 
 The modularity \cite{newman2006modularity}, Infomap \cite{rosvall2009map}, and conductance
 minimization \cite{shi2000normalized} formulations lead to NP-hard problems, and so rely on
 approximations.
 Modularity optimization, despite its popularity, has some limitations as pointed out in
-\cite{fortunato2007resolution}. One limitation is the resolution limit where the modularity score is tends to favour larger
+\cite{fortunato2007resolution}. One limitation is the resolution limit where the modularity score tends to favour larger
 communities. 
-For instance, for the graph in Fig.~\ref{fig:modularity_2} (right), the  modularity score is
+For instance, for the graph in Fig.~\ref{fig:modularity_2} (left), the  modularity score is
 minimized by the entire set, and so it fails to detect the more meaningful communities $\Set{0,1}$
 and $\Set{2,3}$, which can be identified using our formulation.
-Another example is  the ring of cliques \cite{fortunato2007resolution} shown in \ref{fig:modularity_2} (left) for 
+Another example is  the ring of cliques \cite{fortunato2007resolution} shown in \ref{fig:modularity_2} (right) for 
 $30$ cliques each of size $5$. In this case, the modularity method
 groups two consecutive cliques as one cluster, while our formulation can identify every clique.
 %
-%Methods that are based on conductance minimization may also suffer since they tend to favour solutions of
-Conductance-minimization based methods may also suffer since they tend to favour solutions of
+Methods that are based on conductance minimization may also suffer since they tend to favour solutions of
+%Conductance-minimization based methods may also suffer since they tend to favour solutions of
 relatively equal size.\footnote{While this is desirable in some applications, it can also lead to some
 undesirable solutions.} An example graph demonstrating this is shown in Fig.~\ref{fig:conductance}.
 A similiar issue is faced by Infomap as shown in Figs.~\ref{fig:infomap} and \ref{fig:infomap2}.
 
 
 Finally, Fig. \ref{fig:LFR} shows that many existing methods fail to find strong communities
-\eqref{eq:`s} of large sizes as compared to our method.
+\eqref{eq:`s} of large sizes as compared to our method. (See the figure's caption for details.)
 The experiment was conducted on a random graph generated according to the LFR benchmark with $\mu = 0.1$
 \cite{lancichinetti2009benchmarks}.
 %result uses a synthetic graphical network randomly generated using an existing method.

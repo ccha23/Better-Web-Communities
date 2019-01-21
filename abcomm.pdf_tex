@@ -36,7 +36,7 @@
   }%
   \providecommand\rotatebox[2]{#2}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{400.06364978bp}%
+    \setlength{\unitlength}{400.36980213bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -48,11 +48,10 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.74991996)%
+  \begin{picture}(1,0.74953433)%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{abcomm.pdf}}%
-    \put(0.02012497,0.26838041){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[lb]{\smash{community support}}}}%
-    \put(0.4049774,0.00553135){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{size of community}}}%
+    \put(0.02087426,0.268363){\color[rgb]{0,0,0}\rotatebox{90}{\makebox(0,0)[lb]{\smash{community stregth}}}}%
+    \put(0.4054324,0.00571493){\color[rgb]{0,0,0}\makebox(0,0)[lb]{\smash{size of community}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{abcomm.pdf}}%
-    \put(0.86309729,0.70492712){\color[rgb]{0,0,0}\makebox(0,0)[b]{\smash{Alpha Beta Community}}}%
   \end{picture}%
 \endgroup%

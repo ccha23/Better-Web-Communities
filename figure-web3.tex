@@ -1,20 +1,8 @@
 
 \usetikzlibrary{arrows,patterns}
 
-\pgfdeclarepatternformonly{soft crosshatch}{\pgfqpoint{-1pt}{-1pt}}{\pgfqpoint{4pt}{4pt}}{\pgfqpoint{3pt}{3pt}}%
-{
-  \pgfsetstrokecolor{blue}
-  \pgfsetstrokeopacity{0.3}
-  \pgfsetlinewidth{0.4pt}
-  \pgfpathmoveto{\pgfqpoint{3.1pt}{0pt}}
-  \pgfpathlineto{\pgfqpoint{0pt}{3.1pt}}
-  \pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
-  \pgfpathlineto{\pgfqpoint{3.1pt}{3.1pt}}
-  \pgfusepath{stroke}
-}
-
 \tikzstyle{cut}=[fill=red, fill opacity=0.2,rounded corners,inner sep=0.1em]
-\tikzstyle{cluster}=[pattern=soft crosshatch, pattern color=blue, fill opacity=0.2,rounded corners,inner sep=0.1em]
+\tikzstyle{cluster}=[pattern=crosshatch, pattern color=blue, opacity=0.3,rounded corners,inner sep=0.1em]
 \tikzstyle{v}=[circle,draw,fill=gray!40,minimum size=2,transform shape]
 \tikzstyle{nodestyle}=[every node/.style={transform shape}]
 
