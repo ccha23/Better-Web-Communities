@@ -27,3 +27,6 @@ If you make advantage of the our work in your research, please cite the followin
   year={2019},
 }
 ```
+
+## License
+MIT
