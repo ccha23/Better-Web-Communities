@@ -1,5 +1,7 @@
 # Finding Better Web Communities in Digraphs via Max-Flow Min-Cut
 
+The paper in [PDF](doc/Better_Web_Communities.pdf).
+
 ## Implementation
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/handasontam/Alpha-Beta-Communities/master)
