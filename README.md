@@ -6,16 +6,8 @@
 ## Paper
 
 - The paper in [PDF](doc/Better_Web_Communities.pdf) format.
-- You may cite our work as follows:
-
-```
-@misc{chan19,
-  author = {Chung Chan and Ali Al{-}Bashabsheh and Da Sun Handason Tam and Chao Zhao},
-  title = {Finding Better Web Communities in Digraphs via Max-Flow Min-Cut},
-  year = {2019},
-  howpublished = {{G}it{H}ub repository: \url{https://github.com/ccha23/Better-Web-Communities}},
-}
-```
+- Click [![DOI](https://zenodo.org/badge/166487485.svg)](https://zenodo.org/badge/latestdoi/166487485)
+to cite this work.
 
 ## Implementation
 
