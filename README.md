@@ -13,9 +13,6 @@
   author = {Chung Chan and Ali Al{-}Bashabsheh and Da Sun Handason Tam and Chao Zhao},
   title = {Finding Better Web Communities in Digraphs via Max-Flow Min-Cut},
   year = {2019},
-  publisher = {GitHub},
-  journal = {GitHub repository},
-  doi = {10.5281/zenodo.2545047},
   howpublished = {{G}it{H}ub repository: \url{https://github.com/ccha23/Better-Web-Communities}},
 }
 ```
