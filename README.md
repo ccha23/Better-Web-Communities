@@ -1,3 +1,6 @@
+
+[![DOI](https://zenodo.org/badge/166487485.svg)](https://zenodo.org/badge/latestdoi/166487485)
+
 # Finding Better Web Communities in Digraphs via Max-Flow Min-Cut
 
 ## Paper
@@ -12,6 +15,7 @@
   year = {2019},
   publisher = {GitHub},
   journal = {GitHub repository},
+  doi = {10.5281/zenodo.2545047},
   howpublished = {{G}it{H}ub repository: \url{https://github.com/ccha23/Better-Web-Communities}},
 }
 ```
